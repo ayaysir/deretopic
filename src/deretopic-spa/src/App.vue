@@ -7,7 +7,6 @@
 
 <script>
     import HelloWorld from './components/HelloWorld.vue'
-    import request from "request"
 
     export default {
         name: 'App',
@@ -15,10 +14,16 @@
             HelloWorld
         },
         mounted() {
-            request(`${location.protocol}//${location.host}` + "/api/test", (error, response, body) => {
-                console.log(">>>>>>>>>>", location.protocol, location.host, location.hostname, `${location.protocol}//${location.host}` + "/api/test")
-                console.log(">>>>>>>>>>", error, response && response.statusCode)
-                console.log(">>>>>>>>>>", body)
+            fetch("/api/test", {
+                method: "get"
+            }).then(resp => {
+                const text = resp.text()
+                console.log("resp", resp)
+                return text // [[PromiseValue]]를 꺼내 다음 then으로 전송
+            }).then(text => {
+                console.log("fetch: " + text)
+            }).catch(excResp => {
+                console.log(excResp)
             })
         }
     }

@@ -43,6 +43,7 @@ out/
 src/deretopic-spa/node_modules/
 src/deretopic-spa/dist/
 src/deretopic-spa/public/
+src/deretopic-spa/npm-v6.13.6/
 node_modules
 /dist
 npm-debug.log
