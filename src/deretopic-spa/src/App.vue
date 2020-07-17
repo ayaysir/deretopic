@@ -18,7 +18,7 @@
                 method: "get"
             }).then(resp => {
                 const text = resp.text()
-                console.log("resp", resp)
+                console.log(resp)
                 return text // [[PromiseValue]]를 꺼내 다음 then으로 전송
             }).then(text => {
                 console.log("fetch: " + text)
