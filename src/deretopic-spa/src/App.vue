@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <img alt="Vue logo" src="./assets/logo.png">
-        <HelloWorld msg="Welcome to Your Vue.js App" />
+        <HelloWorld v-bind:msg="welcomeMessage" />
     </div>
 </template>
 
@@ -10,10 +10,15 @@
 
     export default {
         name: 'App',
+        data() {
+            return {
+                welcomeMessage: "default msg"
+            }
+        },
         components: {
             HelloWorld
         },
-        mounted() {
+        created() {
             fetch("/api/test", {
                 method: "get"
             }).then(resp => {
@@ -22,8 +27,10 @@
                 return text // [[PromiseValue]]를 꺼내 다음 then으로 전송
             }).then(text => {
                 console.log("fetch: " + text)
+                this.welcomeMessage = text
             }).catch(excResp => {
                 console.log(excResp)
+                this.welcomeMessage = "Error"
             })
         }
     }

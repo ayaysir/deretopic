@@ -17,7 +17,7 @@ public class GeneralControllerTest {
 
     @Test
     public void return_test() throws Exception {
-        String test = "test";
+        String test = "deretopic";
 
         mvc.perform(get("/api/test"))
                 .andExpect(status().isOk())
