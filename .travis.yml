@@ -22,16 +22,16 @@ notifications:
 
 
 before_deploy:
-  - zip -r deretopic *
-  - mkdir -p deploy
-  - mv deretopic.zip deploy/deretopic.zip
-#  - mkdir -p before-deploy
-#  - cp scripts/*.sh before-deploy/
-#  - cp appspec.yml before-deploy/
-#  - cp build/libs/*.jar before-deploy/
-#  - cd before-deploy && zip -r before-deploy * # before-deploy로 이동 후 전체 압축
-#  - cd ../ && mkdir -p deploy
-#  - mv before-deploy/before-deploy.zip deploy/deretopic.zip
+#  - zip -r deretopic *
+#  - mkdir -p deploy
+#  - mv deretopic.zip deploy/deretopic.zip
+  - mkdir -p before-deploy
+  - cp scripts/*.sh before-deploy/
+  - cp appspec.yml before-deploy/
+  - cp build/libs/*.jar before-deploy/
+  - cd before-deploy && zip -r before-deploy * # before-deploy로 이동 후 전체 압축
+  - cd ../ && mkdir -p deploy
+  - mv before-deploy/before-deploy.zip deploy/deretopic.zip
 
 deploy:
   - provider: s3
