@@ -45,8 +45,8 @@ deploy:
     wait-until-deployed: true
 
   - provider: codedeploy
-    access_key_id: $AWS_ACCESS_KEY
-    secret_access_key: $AWS_SECRET_KEY
+    access_key_id: $AWS_ACCESS_KEY_DERE
+    secret_access_key: $AWS_SECRET_KEY_DERE
     bucket: springboot-deretopic-build # s3 bucket
     key: deretopic.zip
     bundle_type: zip
