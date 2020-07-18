@@ -17,7 +17,7 @@ public class GeneralControllerTest {
 
     @Test
     public void return_test() throws Exception {
-        String test = "deretopic";
+        String test = "deretopic-aws-travis";
 
         mvc.perform(get("/api/test"))
                 .andExpect(status().isOk())
