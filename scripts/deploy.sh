@@ -34,6 +34,6 @@ echo "> $JAR_NAME 실행"
 #        $REPOSITORY/$JAR_NAME > $REPOSITORY/nohup.out 2>&1 &
 
 nohup java -jar \
-        -Dserver.port=8080
+        -Dserver.port=8080 \
         -Dspring.profiles.active=real \
         $REPOSITORY/$JAR_NAME > $REPOSITORY/nohup.out 2>&1 &
