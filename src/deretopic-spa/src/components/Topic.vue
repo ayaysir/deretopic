@@ -2,7 +2,7 @@
   <div class="topic">
       <div class="each-idol" v-for="(idol, idolName) in topicData" v-bind:key="idolName">
         <div class="each-row" v-for="(row, i) in idol" v-bind:key="i">
-          <div class="idol-name"><a class="idol-link" :href="'http://localhost:9000/api/idol/redirect/' + idolName" target="_blank">{{idolName}}</a></div>
+          <div class="idol-name"><a class="idol-link" :href="'/api/idol/redirect/' + idolName" target="_blank">{{idolName}}</a></div>
           <div class="topic-num"><span>{{row[0]}}</span></div>
           <div class="topic-content">
             <p class="label-lang">Ja</p>
