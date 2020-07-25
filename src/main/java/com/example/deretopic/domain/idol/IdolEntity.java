@@ -22,6 +22,8 @@ public class IdolEntity {
     private Long id;
 
     private String name;
+    private String nameEn;
+    private String nameKo;
 
     private Integer age;
 
@@ -44,8 +46,9 @@ public class IdolEntity {
     private Constellation constellation;
 
     @Column
-    @ElementCollection(targetClass = String.class)
-    private List<String> hobby;
+//    @ElementCollection(targetClass = String.class)
+//    private List<String> hobby;
+    private String hobby;
 
     @Enumerated(EnumType.STRING)
     private IdolType idolType;
@@ -54,14 +57,17 @@ public class IdolEntity {
     private String note;
 
     @Builder
-    public IdolEntity(Long id, String name, Integer age, LocalDate birthday,
+    public IdolEntity(Long id, String name, String nameEn, String nameKo,
+                      Integer age, LocalDate birthday,
                       String birthPlace, BloodType bloodType, Integer height,
                       Integer weight, ThreeSize threeSize,
-                      Constellation constellation, List<String> hobby, IdolType idolType,
+                      Constellation constellation, String hobby, IdolType idolType,
                       String note) {
         this.id = id;
         this.age = age;
         this.name = name;
+        this.nameEn = nameEn;
+        this.nameKo = nameKo;
         this.birthday = birthday;
         this.birthPlace = birthPlace;
         this.bloodType = bloodType;

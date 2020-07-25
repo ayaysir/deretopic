@@ -63,7 +63,8 @@ public class IdolEntityTest {
         Integer weight = 43;
         ThreeSize threeSize = ThreeSize.builder().bust(80).waist(54).hip(80).build();
         Constellation constellation = Constellation.VIRGO;
-        List<String> hobby = Arrays.asList("ホームパーティ", "天体観測");
+//        List<String> hobby = Arrays.asList("ホームパーティ", "天体観測");
+        String hobby = "ホームパーティ,天体観測";
         IdolType idolType = IdolType.COOL;
         IdolEntity idolEntity = IdolEntity.builder()
                 .name(name)

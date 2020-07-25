@@ -1,7 +1,7 @@
 <template>
   <div class="topic">
       <div class="each-idol" v-for="(idol, idolName) in topicData" v-bind:key="idolName">
-        <div class="each-row" v-for="row in idol" v-bind:key="row">
+        <div class="each-row" v-for="(row, i) in idol" v-bind:key="i">
           <div class="idol-name">{{idolName}}</div>
           <div class="topic-num"><span>{{row[0]}}</span></div>
           <div class="topic-content">
@@ -35,6 +35,7 @@ export default {
     margin: 0px auto;
     display: table;
   }
+
   .each-idol {
     padding: 5px;
     display: table-row;
@@ -91,5 +92,25 @@ export default {
     height: 1px;
     margin-bottom: 10px;
     color: gray;
+  }
+
+
+
+  @media screen and (max-width: 768px) {
+    /* 모바일에 사용될 스트일 시트를 여기에 작성합니다. */
+    .topic {
+      width: 98%;
+      margin: 0px auto;
+      display: table;
+    }
+
+    .idol-name {
+      min-width: 80px;
+      padding-left: 3px;
+    }
+
+    .topic-num {
+      min-width: 30px;
+    }
   }
 </style>
