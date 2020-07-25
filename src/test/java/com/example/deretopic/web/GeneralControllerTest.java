@@ -19,7 +19,7 @@ public class GeneralControllerTest {
     public void return_test() throws Exception {
         String test = "deretopic-aws-travis";
 
-        mvc.perform(get("/api/test"))
+        mvc.perform(get("/api/test/title"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(test));
     }
