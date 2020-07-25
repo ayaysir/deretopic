@@ -2,7 +2,7 @@
   <div class="topic">
       <div class="each-idol" v-for="(idol, idolName) in topicData" v-bind:key="idolName">
         <div class="each-row" v-for="(row, i) in idol" v-bind:key="i">
-          <div class="idol-name">{{idolName}}</div>
+          <div class="idol-name"><a class="idol-link" :href="'http://localhost:9000/api/idol/redirect/' + idolName" target="_blank">{{idolName}}</a></div>
           <div class="topic-num"><span>{{row[0]}}</span></div>
           <div class="topic-content">
             <p class="label-lang">Ja</p>
@@ -95,7 +95,15 @@ export default {
   }
 
 
+  a.idol-link {
+    color: cornflowerblue;
+    text-decoration: none;
+    font-weight: 600;
+  }
 
+  a.idol-link:hover {
+    text-decoration: underline;
+  }
   @media screen and (max-width: 768px) {
     /* 모바일에 사용될 스트일 시트를 여기에 작성합니다. */
     .topic {
@@ -112,5 +120,6 @@ export default {
     .topic-num {
       min-width: 30px;
     }
+
   }
 </style>

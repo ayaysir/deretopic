@@ -21,7 +21,7 @@ public class IdolEntityService {
                 .build()).getId();
     }
 
-    public String findNameKoByNameJa(String nameJa) {
+    public String findNameKoByNameJa(String nameJa) throws IndexOutOfBoundsException{
         return idolEntityRepository.findByName(nameJa).get(0).getNameKo();
     }
 }

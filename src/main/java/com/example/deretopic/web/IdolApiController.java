@@ -20,12 +20,25 @@ public class IdolApiController {
 
     @GetMapping("/api/idol/redirect/test")
     public String inputOne() {
-        idolEntityService.save("computer", "컴퓨터");
+        idolEntityService.save("computer", "시마무라 우즈키");
         return "do test /api/idol/redirect/{nameJa}";
     }
 
     @GetMapping("/api/idol/redirect/{nameJa}")
     public void redirectWikiByNameJa(HttpServletResponse response, @PathVariable String nameJa) throws IOException {
-        response.sendRedirect("http://namu.wiki/w/" + URLEncoder.encode(idolEntityService.findNameKoByNameJa(nameJa), "UTF-8"));
+
+        String nameKo = null;
+        try {
+            nameKo = idolEntityService.findNameKoByNameJa(nameJa);
+        } catch(IndexOutOfBoundsException e) {
+            System.err.println(e);
+        }
+        if(nameKo != null) {
+            response.sendRedirect("http://namu.wiki/w/"
+                    + URLEncoder.encode(nameKo, "UTF-8").replace("+", "%20"));
+        } else {
+            response.sendRedirect("http://namu.wiki/w/"
+                    + URLEncoder.encode("아이돌마스터 신데렐라 걸즈/등장인물", "UTF-8").replace("+", "%20"));
+        }
     }
 }
