@@ -1,17 +1,15 @@
 <template>
   <div class="topic">
-      <div class="each-idol" v-for="(idol, idolName) in topicData" v-bind:key="idolName">
-        <div class="each-row" v-for="(row, i) in idol" v-bind:key="i">
-          <div class="idol-name"><a class="idol-link" :href="'/api/idol/redirect/' + idolName" target="_blank">{{idolName}}</a></div>
-          <div class="topic-num"><span>{{row[0]}}</span></div>
+        <div class="each-row" v-for="(uwasa, j) in getLineBreakedData" v-bind:key="j">
+          <div class="idol-name"><a class="idol-link" :href="'/api/idol/redirect/' + uwasa.idolNameJa" target="_blank">{{uwasa.idolNameJa}}</a></div>
+          <div class="topic-num"><span>{{uwasa.topicNum}}</span></div>
           <div class="topic-content">
             <p class="label-lang">Ja</p>
-            <p class="topic-ja">{{row[1]}} <a class="btn-speech" @click="speak(row[1], {lang:'ja-JP'})">🔊</a></p>
+            <p class="topic-ja"><span v-html="uwasa.uwasaJa"></span> <a class="btn-speech" @click="speak(uwasa.uwasaJa.replace(/<br>/g, ''), {lang:'ja-JP'})">🔊</a></p>
             <p class="label-lang">Ko</p>
-            <p class="topic-ko">{{row[2]}}</p>
+            <p class="topic-ko"><span v-html="uwasa.uwasaKo"></span></p>
           </div>
         </div>
-      </div>
     
   </div>
 </template>
@@ -25,12 +23,23 @@ export default {
   props: ["topicData"],
   data() {
       return {
-          propTopicData: []
+          propTopicData: this.topicData
       }
   },
   mounted() {
     
   },
+  computed: {
+    getLineBreakedData() {
+      const data = JSON.parse(JSON.stringify(this.topicData))
+      return data.map(v => {
+        v.uwasaJa = v.uwasaJa.replace(/(?:\\r\\n|\\r|\\n)/g, "<br>")
+        v.uwasaKo = v.uwasaKo.replace(/(?:\\r\\n|\\r|\\n)/g, "<br>")
+        return v
+      })
+    }
+  },
+
   methods: {
     speak(text, opt_prop) {
       if (typeof SpeechSynthesisUtterance === "undefined" || typeof window.speechSynthesis === "undefined") {

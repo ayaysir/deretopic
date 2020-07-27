@@ -37,25 +37,41 @@
                 this.welcomeMessage = "Error"
             })
 
-            async function getTopic() {
+            // async function getTopic() {
+            //     try {
+            //         const init1 = await fetch("/api/test/data/1", {method: "GET"})
+            //         const data1 = await init1.text()
+
+            //         const init2 = await fetch("/api/test/data/2", {method: "GET"})
+            //         const data2 = await init2.text()
+
+            //         const init3 = await fetch("/api/test/data/3", {method: "GET"})
+            //         const data3 = await init3.text()
+
+            //         return [JSON.parse(data1), JSON.parse(data2), JSON.parse(data3)]
+            //     } catch(exc) {
+            //         console.error(exc)
+            //     }
+            // }
+
+            async function getTopicFromApi() {
                 try {
-                    const init1 = await fetch("/api/test/data/1", {method: "GET"})
-                    const data1 = await init1.text()
+                    const init = await fetch("/api/idol/uwasa", {method: "GET"})
+                    const data = await init.json()
 
-                    const init2 = await fetch("/api/test/data/2", {method: "GET"})
-                    const data2 = await init2.text()
-
-                    const init3 = await fetch("/api/test/data/3", {method: "GET"})
-                    const data3 = await init3.text()
-
-                    return [JSON.parse(data1), JSON.parse(data2), JSON.parse(data3)]
+                    return data
                 } catch(exc) {
                     console.error(exc)
                 }
             }
 
-            getTopic().then(data => {
-                this.topicDataFromSuper = {...data[0], ...data[1], ...data[2]}
+            // getTopic().then(data => {
+            //     this.topicDataFromSuper = {...data[0], ...data[1], ...data[2]}
+            // })
+
+            getTopicFromApi().then(data => {
+                console.log("fromAPI", data)
+                this.topicDataFromSuper = data
             })
 
             

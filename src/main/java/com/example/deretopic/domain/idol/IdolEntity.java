@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor  // 파라미터가 없는 생성자를 만든다.
@@ -55,6 +54,12 @@ public class IdolEntity {
 
     @Column(columnDefinition = "TEXT")
     private String note;
+
+    // 위키 링크
+    private String refKeyword;
+
+
+
 
     @Builder
     public IdolEntity(Long id, String name, String nameEn, String nameKo,
