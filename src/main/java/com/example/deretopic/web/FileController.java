@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.filechooser.FileSystemView;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URLEncoder;
 
 @Controller
@@ -21,9 +23,7 @@ public class FileController {
     @ResponseStatus(HttpStatus.OK)	// Thymeleaf 사용시 이것을 사용해야 에러가 발생하지 않음
     public void fileDownloadOnWebBroweser(HttpServletRequest req, HttpServletResponse res, @PathVariable String idolName, @PathVariable String topicNum) throws Exception  {
 
-        ClassPathResource res2 = new ClassPathResource("references/tts/");
-        System.out.println(">>> " + res2.getPath());
-        File initFile = res2.getFile();
+        File initFile = new File(FileSystemView.getFileSystemView().getHomeDirectory() + "/deretopic/resources/tts/");
 
         // find target
         File oneFile = null;
@@ -75,9 +75,11 @@ public class FileController {
     }
 
     public static void main(String[] args) throws IOException {
-        ClassPathResource res2 = new ClassPathResource("references/tts/");
-        System.out.println(res2);
-        File f = res2.getFile();
+//        ClassPathResource res2 = new ClassPathResource("references/tts/");
+//        System.out.println(res2);
+//        File f = res2.getFile();
+        File f = new File(FileSystemView.getFileSystemView().getHomeDirectory() + "/deretopic/resources/tts/");
+        System.out.println(f.getAbsolutePath());
         System.out.println(f.isDirectory());
         File[] fs = f.listFiles();
         if(fs.length > 0) {
