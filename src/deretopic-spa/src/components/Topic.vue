@@ -8,7 +8,7 @@
             <p class="topic-ja">
               <span v-html="uwasa.uwasaJa"></span> 
               <a class="btn-speech" @click="playTTS($event)">🔊</a>
-              <audio class="tts-audio" :src="'/api/idol/tts/' + uwasa.idolNameJa + '/' + uwasa.topicNum" controls preload=none></audio>
+              <audio class="tts-audio" :src="'/api/idol/tts/' + uwasa.idolNameJa + '/' + uwasa.topicNum" preload=none></audio>
             </p>
             <p class="label-lang">Ko</p>
             <p class="topic-ko"><span v-html="uwasa.uwasaKo"></span></p>
@@ -74,22 +74,22 @@ export default {
     }
 
     // getSpeechAudioFromServer(idolName, topicNum) {
-    //     async function get() {
-    //       const init = await fetch(`/api/idol/tts/${idolName}/${topicNum}`, {method: "get"})
-    //       const blob = await init.blob()
-    //       return blob
-    //     }
+        // async function get() {
+        //   const init = await fetch(`/api/idol/tts/${idolName}/${topicNum}`, {method: "get"})
+        //   const blob = await init.blob()
+        //   return blob
+        // }
 
-    //     get().then(blob => {
-    //       const audio = new Audio()
+        // get().then(blob => {
+        //   const audio = new Audio()
           
-    //       audio.src = URL.createObjectURL(blob)
-    //       const playPromise = audio.play()
-    //       playPromise.catch(error => {
-    //         console.error(error)
-    //       }).then(() => {
-    //         console.log("not error")
-    //       })
+        //   audio.src = URL.createObjectURL(blob)
+        //   const playPromise = audio.play()
+        //   playPromise.catch(error => {
+        //     console.error(error)
+        //   }).then(() => {
+        //     console.log("not error")
+        //   })
 
 
     //     })
