@@ -37,8 +37,8 @@ export default {
     getLineBreakedData() {
       const data = JSON.parse(JSON.stringify(this.topicData))
       return data.map(v => {
-        v.uwasaJa = v.uwasaJa.replace(/(?:\\r\\n|\\r|\\n)/g, "<br>")
-        v.uwasaKo = v.uwasaKo.replace(/(?:\\r\\n|\\r|\\n)/g, "<br>")
+        v.uwasaJa = v.uwasaJa.replace(/(?:\\r\\n|\\r|\\n|\r\n|\r|\n)/g, "<br>")
+        v.uwasaKo = v.uwasaKo.replace(/(?:\\r\\n|\\r|\\n|\r\n|\r|\n)/g, "<br>")
         return v
       })
     }
@@ -76,28 +76,6 @@ export default {
       mainAudio.play()
       
     }
-
-    // getSpeechAudioFromServer(idolName, topicNum) {
-        // async function get() {
-        //   const init = await fetch(`/api/idol/tts/${idolName}/${topicNum}`, {method: "get"})
-        //   const blob = await init.blob()
-        //   return blob
-        // }
-
-        // get().then(blob => {
-        //   const audio = new Audio()
-          
-        //   audio.src = URL.createObjectURL(blob)
-        //   const playPromise = audio.play()
-        //   playPromise.catch(error => {
-        //     console.error(error)
-        //   }).then(() => {
-        //     console.log("not error")
-        //   })
-
-
-    //     })
-    // }
   }
 }
 </script>
