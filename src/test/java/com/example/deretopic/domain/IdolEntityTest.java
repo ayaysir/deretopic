@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -54,6 +53,8 @@ public class IdolEntityTest {
          *   },
          */
         // given
+        idolEntityRepository.deleteAll();
+
         String name = "アナスタシア";
         Integer age = 15;
         LocalDate birthday = LocalDate.of(0, 9, 19);
@@ -63,7 +64,6 @@ public class IdolEntityTest {
         Integer weight = 43;
         ThreeSize threeSize = ThreeSize.builder().bust(80).waist(54).hip(80).build();
         Constellation constellation = Constellation.VIRGO;
-//        List<String> hobby = Arrays.asList("ホームパーティ", "天体観測");
         String hobby = "ホームパーティ,天体観測";
         IdolType idolType = IdolType.COOL;
         IdolEntity idolEntity = IdolEntity.builder()

@@ -67,7 +67,7 @@ public class IdolEntity {
                       String birthPlace, BloodType bloodType, Integer height,
                       Integer weight, ThreeSize threeSize,
                       Constellation constellation, String hobby, IdolType idolType,
-                      String note) {
+                      String note, String refKeyword) {
         this.id = id;
         this.age = age;
         this.name = name;
@@ -83,5 +83,6 @@ public class IdolEntity {
         this.hobby = hobby;
         this.idolType = idolType;
         this.note = note;
+        this.refKeyword = refKeyword;
     }
 }

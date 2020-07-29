@@ -5,7 +5,11 @@
           <div class="topic-num"><span>{{uwasa.topicNum}}</span></div>
           <div class="topic-content">
             <p class="label-lang">Ja</p>
-            <p class="topic-ja"><span v-html="uwasa.uwasaJa"></span> <a class="btn-speech" @click="speak(uwasa.uwasaJa.replace(/<br>/g, ''), {lang:'ja-JP'})">🔊</a></p>
+            <p class="topic-ja">
+              <span v-html="uwasa.uwasaJa"></span> 
+              <!-- <a class="btn-speech" @click="speak(uwasa.uwasaJa.replace(/<br>/g, ''), {lang:'ja-JP'})">🔊</a> -->
+              <a class="btn-speech" @click="getSpeechAudioFromServer(uwasa.idolNameJa, uwasa.topicNum)">🔊</a>
+            </p>
             <p class="label-lang">Ko</p>
             <p class="topic-ko"><span v-html="uwasa.uwasaKo"></span></p>
           </div>
@@ -59,6 +63,22 @@ export default {
       
       // SpeechSynthesisUtterance에 저장된 내용을 바탕으로 음성합성 실행
       window.speechSynthesis.speak(speechMsg)
+    },
+    getSpeechAudioFromServer(idolName, topicNum) {
+        async function get() {
+          const init = await fetch(`/api/idol/tts/${idolName}/${topicNum}`, {method: "get"})
+          const blob = await init.blob()
+          return blob
+        }
+
+        get().then(blob => {
+          console.log(blob)
+          const audio = new Audio()
+          const convertedSrc = URL.createObjectURL(blob)
+          audio.src = convertedSrc
+          console.log(audio)
+          audio.play()
+        })
     }
   }
 }
