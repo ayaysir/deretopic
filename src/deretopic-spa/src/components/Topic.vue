@@ -1,5 +1,6 @@
 <template>
   <div class="topic">
+        <audio id="tts-audio-main"></audio>
         <div class="each-row" v-for="(uwasa, rowIndex) in getLineBreakedData" v-bind:key="rowIndex">
           <div class="idol-name"><a class="idol-link" :href="'/api/idol/redirect/' + uwasa.idolNameJa" target="_blank">{{uwasa.idolNameJa}}</a></div>
           <div class="topic-num"><span>{{uwasa.topicNum}}</span></div>
@@ -7,8 +8,7 @@
             <p class="label-lang">Ja</p>
             <p class="topic-ja">
               <span v-html="uwasa.uwasaJa"></span> 
-              <a class="btn-speech" @click="playTTS($event)">🔊</a>
-              <audio class="tts-audio" :src="'/api/idol/tts/' + uwasa.idolNameJa + '/' + uwasa.topicNum" preload=none></audio>
+              <a class="btn-speech" @click="playTTS($event)" v-bind:data-name="uwasa.idolNameJa" v-bind:data-num="uwasa.topicNum">🔊</a>
             </p>
             <p class="label-lang">Ko</p>
             <p class="topic-ko"><span v-html="uwasa.uwasaKo"></span></p>
@@ -65,11 +65,15 @@ export default {
       window.speechSynthesis.speak(speechMsg)
     },
     playTTS(event) {
+
       const evTarget = event.currentTarget || event.target
-      const evParent = evTarget.parentElement
-      const evAudio = evParent.getElementsByTagName("audio")[0]
-      console.log(evTarget, evParent, evAudio)
-      evAudio.play()
+      const name = evTarget.dataset.name
+      const num = evTarget.dataset.num
+      console.log(evTarget, evTarget.dataset.name, evTarget.dataset.num)
+
+      const mainAudio = document.getElementById("tts-audio-main")
+      mainAudio.src = '/api/idol/tts/' + name + '/' + num
+      mainAudio.play()
       
     }
 
