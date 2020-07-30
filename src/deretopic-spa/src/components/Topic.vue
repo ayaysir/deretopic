@@ -30,14 +30,14 @@ export default {
   data() {
       return {
           topicData: [],
-          limit: 2
+          limit: 1
       }
   },
   created() {
 
       async function getTopicFromApi() {
           try {
-              const init = await fetch(`/api/idol/uwasa/pages/1`, {method: "GET"})
+              const init = await fetch(`/api/idol/uwasa/pages/0`, {method: "GET"})
               const data = await init.json()
 
               return data

@@ -57,4 +57,9 @@ public class IdolApiController {
         PageRequest pageRequest = PageRequest.of(pageNum, 30);
         return uwasaEntityService.findByPageRequest(pageRequest);
     }
+
+    @GetMapping("/api/idol/uwasa/{notPages}")
+    public String notPages() {
+        return "not pages";
+    }
 }
