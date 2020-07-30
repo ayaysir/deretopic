@@ -4,6 +4,7 @@ import com.example.deretopic.service.IdolEntityService;
 import com.example.deretopic.service.UwasaEntityService;
 import com.example.deretopic.web.dto.UwasaEntityDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,5 +50,11 @@ public class IdolApiController {
     @GetMapping("/api/idol/uwasa")
     public List<UwasaEntityDTO> getAllUwasa() {
         return uwasaEntityService.findAll();
+    }
+
+    @GetMapping("/api/idol/uwasa/pages/{pageNum}")
+    public List<UwasaEntityDTO> getUwasaByPageRequest(@PathVariable Integer pageNum) {
+        PageRequest pageRequest = PageRequest.of(pageNum, 30);
+        return uwasaEntityService.findByPageRequest(pageRequest);
     }
 }

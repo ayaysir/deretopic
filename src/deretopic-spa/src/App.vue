@@ -2,7 +2,7 @@
     <div id="app">
         <img alt="Vue logo" src="./assets/logo.png">
         <HelloWorld v-bind:msg="welcomeMessage" />
-        <Topic v-bind:topicData="topicDataFromSuper" />
+        <Topic />
     </div>
 </template>
 
@@ -22,39 +22,20 @@
             HelloWorld,
             Topic
         },
+
         created() {
-            fetch("/api/test/title", {
-                method: "get"
-            }).then(resp => {
-                const text = resp.text()
-                console.log(resp)
-                return text // [[PromiseValue]]를 꺼내 다음 then으로 전송
-            }).then(text => {
-                console.log("fetch: " + text)
-                this.welcomeMessage = text
-            }).catch(excResp => {
-                console.log(excResp)
-                this.welcomeMessage = "Error"
-            })
 
-            async function getTopicFromApi() {
-                try {
-                    const init = await fetch("/api/idol/uwasa", {method: "GET"})
-                    const data = await init.json()
-
-                    return data
-                } catch(exc) {
-                    console.error(exc)
-                }
+            async function getTitle() {
+                const init = await fetch("/api/test/title", {
+                    method: "get"
+                })
+                return init.text()
             }
-
-            getTopicFromApi().then(data => {
-                console.log("fromAPI", data)
-                this.topicDataFromSuper = data
+            getTitle().then(text => {
+                this.welcomeMessage = text
             })
-
-            
-        },
+        }
+        
         
     }
 
