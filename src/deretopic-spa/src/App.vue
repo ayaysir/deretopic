@@ -1,14 +1,15 @@
 <template>
     <div id="app">
-        <img alt="Vue logo" src="./assets/logo.png">
-        <HelloWorld v-bind:msg="welcomeMessage" />
-        <Topic />
+        <Header :msg="welcomeMessage"></Header>
+        <router-view :msg="welcomeMessage"/>
+        <!-- <Topic /> -->
     </div>
 </template>
 
 <script>
-    import HelloWorld from './components/HelloWorld.vue'
-    import Topic from './components/Topic.vue'
+    import Header from './components/Header.vue'
+    // import Topic from './components/Topic.vue'
+
 
     export default {
         name: 'App',
@@ -19,8 +20,8 @@
             }
         },
         components: {
-            HelloWorld,
-            Topic
+            Header,
+            // Topic
         },
 
         created() {
@@ -48,7 +49,7 @@
         -moz-osx-font-smoothing: grayscale;
         text-align: center;
         color: #2c3e50;
-        margin-top: 60px;
+        /* margin-top: 60px; */
     }
 
     #app img {

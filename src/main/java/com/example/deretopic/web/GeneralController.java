@@ -9,7 +9,7 @@ public class GeneralController {
 
     @GetMapping("/api/test/title")
     public String test() {
-        return "deretopic-aws-travis";
+        return "데레스테 소문";
     }
 
     @GetMapping("/api/test/data/{num}")

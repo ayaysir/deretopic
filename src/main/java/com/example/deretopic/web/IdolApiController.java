@@ -2,6 +2,7 @@ package com.example.deretopic.web;
 
 import com.example.deretopic.service.IdolEntityService;
 import com.example.deretopic.service.UwasaEntityService;
+import com.example.deretopic.web.dto.IdolSimpleResponseDTO;
 import com.example.deretopic.web.dto.UwasaEntityDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -61,5 +62,10 @@ public class IdolApiController {
     @GetMapping("/api/idol/uwasa/{notPages}")
     public String notPages() {
         return "not pages";
+    }
+
+    @GetMapping("/api/idol/simple")
+    public List<IdolSimpleResponseDTO> getIdolSimpleList() {
+        return idolEntityService.findAllSimple();
     }
 }

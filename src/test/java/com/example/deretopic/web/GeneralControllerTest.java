@@ -17,11 +17,13 @@ public class GeneralControllerTest {
 
     @Test
     public void return_test() throws Exception {
-        String test = "deretopic-aws-travis";
+        String test = "데레스테 소문";
 
         mvc.perform(get("/api/test/title"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(test));
     }
+
+
 
 }
