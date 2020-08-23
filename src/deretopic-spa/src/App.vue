@@ -52,9 +52,5 @@
         /* margin-top: 60px; */
     }
 
-    #app img {
-        width: 200px;
-        border-radius: 10px;
-    }
 
 </style>

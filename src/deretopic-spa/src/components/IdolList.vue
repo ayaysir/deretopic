@@ -1,10 +1,14 @@
 <template>
     <div>
-        <table>
+        <table class="idol-list"> 
             <thead>
+                <th>No.</th>
+                <th>이름</th>
+                <th>이름 (한글)</th>
             </thead>
             <tbody>
                 <tr v-for="idol in idols" :key="idol.name">
+                    <td>{{idol.id}}</td>
                     <td>{{idol.name}}</td>
                     <td>{{idol.nameKo}}</td>
                 </tr>
@@ -37,5 +41,7 @@ export default {
 </script>
 
 <style scoped>
-
+    .idol-list {
+        margin: 0px auto;
+    }
 </style>
