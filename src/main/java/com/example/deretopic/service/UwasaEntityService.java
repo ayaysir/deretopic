@@ -1,6 +1,6 @@
 package com.example.deretopic.service;
 
-import com.example.deretopic.domain.uwasa.UwasaRepository;
+import com.example.deretopic.domain.uwasa.UwasaEntityRepository;
 import com.example.deretopic.web.dto.UwasaEntityDTO;
 import com.example.deretopic.web.dto.UwasaEntitySaveDTO;
 import lombok.RequiredArgsConstructor;
@@ -15,23 +15,26 @@ import java.util.stream.Collectors;
 @Service
 public class UwasaEntityService {
 
-    private final UwasaRepository uwasaRepository;
+    private final UwasaEntityRepository uwasaEntityRepository;
 
     @Transactional
     public Long save(UwasaEntitySaveDTO uwasaEntitySaveDTO) {
-        return uwasaRepository.save(uwasaEntitySaveDTO.toEntity()).getId();
+        return uwasaEntityRepository.save(uwasaEntitySaveDTO.toEntity()).getId();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<UwasaEntityDTO> findAll() {
-        return uwasaRepository.findAll().stream()
+        return uwasaEntityRepository.findAll().stream()
                 .map(UwasaEntityDTO::new)
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public List<UwasaEntityDTO> findByPageRequest(PageRequest pageRequest) {
-        return uwasaRepository.findAll(pageRequest).stream()
+        return uwasaEntityRepository.findAll(pageRequest).stream()
                 .map(UwasaEntityDTO::new)
                 .collect(Collectors.toList());
     }
+
+
 }

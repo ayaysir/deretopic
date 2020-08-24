@@ -1,4 +1,4 @@
-package com.example.deretopic.domain;
+package com.example.deretopic.domain.idol;
 
 import com.example.deretopic.domain.common.BloodType;
 import com.example.deretopic.domain.common.Constellation;
