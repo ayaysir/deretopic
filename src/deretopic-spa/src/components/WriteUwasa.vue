@@ -118,7 +118,7 @@ export default {
                                     reader.result.length
                     )
 
-                    console.log(reader.result)
+                    console.log(base64.length)
                     this.ttsFileBase64 = base64
                 }, false)
                 reader.readAsDataURL(file)

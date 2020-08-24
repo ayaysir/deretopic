@@ -85,6 +85,7 @@ public class IdolApiController {
 
         if(!tempHash.equals(receivedHash)) {
             result.put("uwasaId", -9999);
+            result.put("uploadStatus", "PasswordIsWrong");
             return result;
         }
 
@@ -95,6 +96,11 @@ public class IdolApiController {
 
         if(ttsAudioBase64 == null || ttsAudioBase64.equals("")) {
             result.put("isTTSInserted", false);
+            result.put("uploadStatus", "FileIsNull");
+            return result;
+        } else if(ttsAudioBase64.length() > 400000) {
+            result.put("isTTSInserted", false);
+            result.put("uploadStatus", "FileIsTooBig");
             return result;
         }
 
@@ -114,10 +120,12 @@ public class IdolApiController {
             fileOutputStream.close();
 
             result.put("isTTSInserted", true);
+            result.put("uploadStatus", "AllSuccess");
             uwasaEntityService.updateTTSOnly(insertResult, ttsFileName);
 
         } catch(IOException e) {
             System.err.println(e);
+            result.put("uploadStatus", "DataInsertedButFileIsNotUploaded");
             result.put("isTTSInserted", false);
         }
 
