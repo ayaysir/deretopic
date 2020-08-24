@@ -12,9 +12,13 @@ public class UwasaEntitySaveDTO {
     private String ttsAudioBase64, tempHash;
     private Integer topicNum;
 
+    // 주석
+    private String comment;
+
     @Builder
     public UwasaEntitySaveDTO(String idolNameJa, String uwasaJa, String uwasaKo,
                               Integer topicNum,
+                              String comment,
                               String ttsAudioBase64, String tempHash) {
         this.idolNameJa = idolNameJa;
         this.uwasaJa = uwasaJa;

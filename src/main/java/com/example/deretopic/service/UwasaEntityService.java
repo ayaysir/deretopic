@@ -1,5 +1,6 @@
 package com.example.deretopic.service;
 
+import com.example.deretopic.domain.uwasa.UwasaEntity;
 import com.example.deretopic.domain.uwasa.UwasaEntityRepository;
 import com.example.deretopic.web.dto.UwasaEntityDTO;
 import com.example.deretopic.web.dto.UwasaEntitySaveDTO;
@@ -22,6 +23,16 @@ public class UwasaEntityService {
         return uwasaEntityRepository.save(uwasaEntitySaveDTO.toEntity()).getId();
     }
 
+    @Transactional
+    public Long updateTTSOnly(Long id, String ttsFileName) {
+        UwasaEntity entity = uwasaEntityRepository.findById(id)
+                .orElseThrow(() -> new IllegalStateException("해당 소문이 없습니다. id=" + id));
+
+        entity.updateOnlyTTS(ttsFileName);
+
+        return id;
+    }
+
     @Transactional(readOnly = true)
     public List<UwasaEntityDTO> findAll() {
         return uwasaEntityRepository.findAll().stream()
@@ -34,6 +45,14 @@ public class UwasaEntityService {
         return uwasaEntityRepository.findAll(pageRequest).stream()
                 .map(UwasaEntityDTO::new)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public UwasaEntityDTO findById(Long id) {
+        UwasaEntity entity = uwasaEntityRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 소문이 없습니다. id=" + id));
+
+        return new UwasaEntityDTO(entity);
     }
 
 

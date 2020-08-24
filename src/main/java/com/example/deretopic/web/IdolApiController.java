@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.swing.filechooser.FileSystemView;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.security.NoSuchAlgorithmException;
@@ -113,7 +112,10 @@ public class IdolApiController {
             FileOutputStream fileOutputStream = new FileOutputStream(ttsFile);
             fileOutputStream.write(decodedBytes);
             fileOutputStream.close();
+
             result.put("isTTSInserted", true);
+            uwasaEntityService.updateTTSOnly(insertResult, ttsFileName);
+
         } catch(IOException e) {
             System.err.println(e);
             result.put("isTTSInserted", false);

@@ -8,7 +8,7 @@
             <p class="label-lang">Ja</p>
             <p class="topic-ja">
               <span v-html="uwasa.uwasaJa"></span> 
-              <a class="btn-speech" @click="playTTS($event)" v-bind:data-name="uwasa.idolNameJa" v-bind:data-num="uwasa.topicNum">🔊</a>
+              <a class="btn-speech" @click="playTTS($event)" v-bind:data-id="uwasa.id" v-bind:data-name="uwasa.idolNameJa" v-bind:data-num="uwasa.topicNum">🔊</a>
             </p>
             <p class="label-lang">Ko</p>
             <p class="topic-ko"><span v-html="uwasa.uwasaKo"></span></p>
@@ -125,12 +125,11 @@ export default {
     playTTS(event) {
 
       const evTarget = event.currentTarget || event.target
-      const name = evTarget.dataset.name
-      const num = evTarget.dataset.num
-      console.log(evTarget, evTarget.dataset.name, evTarget.dataset.num)
+      const id = evTarget.dataset.id
+      console.log(evTarget, evTarget.dataset)
 
       const mainAudio = document.getElementById("tts-audio-main")
-      mainAudio.src = '/api/idol/tts/' + name + '/' + num
+      mainAudio.src = '/api/idol/tts/' + id
       mainAudio.play()
       
     },

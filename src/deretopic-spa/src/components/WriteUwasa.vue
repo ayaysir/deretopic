@@ -48,6 +48,17 @@
 
             
         </fieldset>
+
+        <div class="convert-instruction">
+            <h4>오디오 파일 변환방법</h4>
+
+            <p>1. Shell Script 작성</p>
+            
+            <pre><code>#!/bin/bash
+            say -v Kyoko -o [파일이름].aiff &quot;[일본어 원문]&quot;</code></pre> 
+
+            <p>2. AIFF 파일을 mp3로 변환 (MediaHuman Converter)</p>
+        </div>
     </div>
 </template>
 
@@ -175,4 +186,5 @@ export default {
     .form-group label {
         display: block;
     }
+
 </style>
