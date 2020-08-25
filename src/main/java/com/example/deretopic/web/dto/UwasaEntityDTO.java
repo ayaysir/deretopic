@@ -1,5 +1,6 @@
 package com.example.deretopic.web.dto;
 
+import com.example.deretopic.domain.idol.IdolEntity;
 import com.example.deretopic.domain.uwasa.UwasaEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,8 @@ public class UwasaEntityDTO {
     // tts 파일 이름
     private String ttsFileName;
 
+    private IdolEntity idol;
+
     public UwasaEntityDTO(UwasaEntity uwasaEntity) {
         this.id = uwasaEntity.getId();
         this.idolNameJa = uwasaEntity.getIdolNameJa();
@@ -25,5 +28,6 @@ public class UwasaEntityDTO {
         this.uwasaKo = uwasaEntity.getUwasaKo();
         this.comment = uwasaEntity.getComment();
         this.ttsFileName = uwasaEntity.getTtsFileName();
+        this.idol = uwasaEntity.getIdol();
     }
 }

@@ -1,9 +1,11 @@
 package com.example.deretopic.web.dto;
 
+import com.example.deretopic.domain.idol.IdolEntity;
 import com.example.deretopic.domain.uwasa.UwasaEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @NoArgsConstructor
@@ -15,11 +17,17 @@ public class UwasaEntitySaveDTO {
     // 주석
     private String comment;
 
+    private Long idolId;
+
+    @Setter
+    private IdolEntity idol;
+
     @Builder
     public UwasaEntitySaveDTO(String idolNameJa, String uwasaJa, String uwasaKo,
                               Integer topicNum,
                               String comment,
-                              String ttsAudioBase64, String tempHash) {
+                              String ttsAudioBase64, String tempHash, Long idolId
+                              ) {
         this.idolNameJa = idolNameJa;
         this.uwasaJa = uwasaJa;
         this.uwasaKo = uwasaKo;
@@ -34,6 +42,7 @@ public class UwasaEntitySaveDTO {
                 .topicNum(topicNum)
                 .uwasaJa(uwasaJa)
                 .uwasaKo(uwasaKo)
+                .idol(idol)
                 .build();
     }
 }

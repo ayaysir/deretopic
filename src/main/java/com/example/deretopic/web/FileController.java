@@ -1,5 +1,6 @@
 package com.example.deretopic.web;
 
+import com.example.deretopic.domain.uwasa.UwasaEntity;
 import com.example.deretopic.service.UwasaEntityService;
 import com.example.deretopic.web.dto.UwasaEntityDTO;
 import lombok.RequiredArgsConstructor;
@@ -100,6 +101,7 @@ public class FileController {
 
         return result;
     }
+
 
     public static void main(String[] args) throws IOException {
 //        ClassPathResource res2 = new ClassPathResource("references/tts/");

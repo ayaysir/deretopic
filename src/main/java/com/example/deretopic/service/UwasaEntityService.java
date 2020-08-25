@@ -1,5 +1,7 @@
 package com.example.deretopic.service;
 
+import com.example.deretopic.domain.idol.IdolEntity;
+import com.example.deretopic.domain.idol.IdolEntityRepository;
 import com.example.deretopic.domain.uwasa.UwasaEntity;
 import com.example.deretopic.domain.uwasa.UwasaEntityRepository;
 import com.example.deretopic.web.dto.UwasaEntityDTO;
@@ -17,9 +19,14 @@ import java.util.stream.Collectors;
 public class UwasaEntityService {
 
     private final UwasaEntityRepository uwasaEntityRepository;
+    private final IdolEntityRepository idolEntityRepository;
 
     @Transactional
     public Long save(UwasaEntitySaveDTO uwasaEntitySaveDTO) {
+        Long idolId = uwasaEntitySaveDTO.getIdolId();
+        IdolEntity idol = idolEntityRepository.findById(idolId)
+                .orElseThrow(() -> new IllegalStateException("아이돌이 없습니다. id:" + idolId));
+        uwasaEntitySaveDTO.setIdol(idol);
         return uwasaEntityRepository.save(uwasaEntitySaveDTO.toEntity()).getId();
     }
 
@@ -65,6 +72,15 @@ public class UwasaEntityService {
                 .collect(Collectors.toList());
 
         return dtoList;
+    }
+
+    @Transactional(readOnly = true)
+    public List<UwasaEntityDTO> findByIdolJaName(String idolName) {
+        List<UwasaEntity> list = uwasaEntityRepository.findByIdolNameJa(idolName);
+
+        return list.stream()
+                .map(UwasaEntityDTO::new)
+                .collect(Collectors.toList());
     }
 
 

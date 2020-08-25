@@ -8,7 +8,7 @@
             <div class="form-group">
                 <label>아이돌 선택: </label>
                 <select v-model="selectedIdol">
-                    <option v-for="(idol) in idols" :key="idol.id" :value="idol.name" >
+                    <option v-for="(idol) in idols" :key="idol.id" :value="idol.id" >
                         {{`${idol.nameKo} (${idol.name})`}}</option>
                 </select>
             </div>
@@ -67,7 +67,7 @@ export default {
     data() {
         return {
             idols: [],
-            selectedIdol: "島村卯月",
+            selectedIdol: 1,
             textJa: "",
             textKo: "",
             topicNum: 0,
@@ -139,7 +139,7 @@ export default {
             }
 
             const dataObj = {
-                idolNameJa: this.selectedIdol,
+                idolId: this.selectedIdol,
                 uwasaJa: this.textJa,
                 uwasaKo: this.textKo,
                 ttsAudioBase64: this.ttsFileBase64,
@@ -163,7 +163,7 @@ export default {
             } else {
                 alert("데이터가 입력되었습니다.\n" + JSON.stringify(data))
                 // 데이터를 모두 비운다
-                this.selectedIdol = "島村卯月"
+                this.selectedIdol = 1
                 this.textJa = ""
                 this.textKo = ""
                 this.topicNum = 0

@@ -6,6 +6,7 @@
             </select>
             <input type="text" v-model="searchKeyword" @keypress.enter="search">
             <button @click="search">검색</button>
+            <button @click="searchReset">초기화</button>
         </div>
         
     </div>
@@ -23,6 +24,9 @@ export default {
     methods: {
         search() {
             this.$emit("search", this.searchCategory, this.searchKeyword)
+        },
+        searchReset() {
+            this.$emit("search", this.searchCategory, "")
         }
     }
 }

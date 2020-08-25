@@ -117,7 +117,7 @@ public class IdolApiController {
 
         try {
             String ttsFileName = "voice_" + insertResult + "_"
-                    + uwasa.getIdolNameJa() + "_" + uwasa.getTopicNum() + ".mp3";
+                    + uwasa.getIdol().getName() + "_" + uwasa.getTopicNum() + ".mp3";
             File ttsFile = new File(FileSystemView.getFileSystemView().getHomeDirectory()
                     + "/deretopic/resources/tts/" + ttsFileName);
 

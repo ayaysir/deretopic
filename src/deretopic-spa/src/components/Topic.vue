@@ -3,7 +3,11 @@
         <audio id="tts-audio-main"></audio>
         <TopicSearch v-on:search="doSearch" />
         <div class="each-row" v-for="(uwasa, rowIndex) in lineCarriagedTopicData" v-bind:key="rowIndex">
-          <div class="idol-name"><a class="idol-link" :href="'/api/idol/redirect/' + uwasa.idolNameJa" target="_blank">{{uwasa.idolNameJa}}</a></div>
+          <div class="idol-name">
+            <p>{{uwasa.idol.nameKo}}<br>
+            <a class="idol-link" :href="'/api/idol/redirect/' + uwasa.idol.name" target="_blank">{{uwasa.idol.name}}</a>
+            </p>
+          </div>
           <div class="topic-num"><span>{{uwasa.topicNum}}</span></div>
           <div class="topic-content">
             <p class="label-lang">Ja</p>
@@ -61,7 +65,6 @@ export default {
 
         // 검색어가 있는 겅우 하이라이트
         if(keyword && keyword != "") {
-          console.log("e")
           v.uwasaJa = v.uwasaJa.replace(regex, "<span class='search-highlight'>" + keyword + "</span>")
           v.uwasaKo = v.uwasaKo.replace(regex, "<span class='search-highlight'>" + keyword + "</span>")
         }
@@ -112,6 +115,13 @@ export default {
       mainAudio.play()
       
     },
+    resetSearch() {
+      this.limit = 0
+      this.fetchUrl = `/api/idol/uwasa/pages/{limit}`
+      this.topicData = []
+      this.infiniteId += 1
+      this.searchKeyword = ""
+    },
     doSearch(category, keyword) {
       console.log(category, keyword)
 
@@ -119,10 +129,7 @@ export default {
       const task = {
         "내용" () {
           if(!keyword || keyword == "") {
-            self.limit = 0
-            self.fetchUrl = `/api/idol/uwasa/pages/{limit}`
-            self.topicData = []
-            self.infiniteId += 1
+            self.resetSearch()
           } else {
             self.limit = 0
             self.searchKeyword = keyword
