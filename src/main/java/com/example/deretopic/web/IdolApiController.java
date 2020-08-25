@@ -63,11 +63,18 @@ public class IdolApiController {
     @GetMapping("/api/idol/uwasa/pages/{pageNum}")
     public List<UwasaEntityDTO> getUwasaByPageRequest(@PathVariable Integer pageNum,
                                                       @RequestParam(value = "uwasaKeyword", required = false)
-                                                              String uwasaKeyword) {
+                                                              String uwasaKeyword,
+                                                      @RequestParam(value = "idolKeyword", required = false)
+                                                                  String idolKeyword,
+                                                      @RequestParam(value = "reverseAll", required = false) boolean reverseAll) {
         PageRequest pageRequest = PageRequest.of(pageNum, 30);
 
-        if (uwasaKeyword != null) {
+        if(uwasaKeyword != null) {
             return uwasaEntityService.findUwasaByKeyword(uwasaKeyword, pageRequest);
+        } else if(idolKeyword != null) {
+            return uwasaEntityService.findByIdolKeyword(idolKeyword, pageRequest);
+        } else if(reverseAll){
+            return uwasaEntityService.findByPageRequestReverse(pageRequest);
         } else {
             return uwasaEntityService.findByPageRequest(pageRequest);
         }

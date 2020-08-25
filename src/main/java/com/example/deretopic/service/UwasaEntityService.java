@@ -87,5 +87,18 @@ public class UwasaEntityService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public List<UwasaEntityDTO> findByIdolKeyword(String keyword, PageRequest pageRequest) {
+        return uwasaEntityRepository.findByIdolKeyword(keyword, pageRequest).stream()
+                .map(UwasaEntityDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<UwasaEntityDTO> findByPageRequestReverse(PageRequest pageRequest) {
+        return uwasaEntityRepository.findAllByOrderByIdDesc(pageRequest).stream()
+                .map(UwasaEntityDTO::new)
+                .collect(Collectors.toList());
+    }
 
 }

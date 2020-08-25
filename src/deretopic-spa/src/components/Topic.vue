@@ -1,7 +1,7 @@
 <template>
   <div class="topic">
         <audio id="tts-audio-main"></audio>
-        <TopicSearch v-on:search="doSearch" />
+        <TopicSearch v-on:search="doSearch" v-on:allOrder="doAllOrder"/>
         <div class="each-row" v-for="(uwasa, rowIndex) in lineCarriagedTopicData" v-bind:key="rowIndex">
           <div class="idol-name">
             <p>{{uwasa.idol.nameKo}}<br>
@@ -115,9 +115,9 @@ export default {
       mainAudio.play()
       
     },
-    resetSearch() {
+    resetSearch(isReverseAll) {
       this.limit = 0
-      this.fetchUrl = `/api/idol/uwasa/pages/{limit}`
+      this.fetchUrl = `/api/idol/uwasa/pages/{limit}` + (isReverseAll ? "?reverseAll=true" : "")
       this.topicData = []
       this.infiniteId += 1
       this.searchKeyword = ""
@@ -125,24 +125,23 @@ export default {
     doSearch(category, keyword) {
       console.log(category, keyword)
 
-      const self = this
-      const task = {
-        "내용" () {
-          if(!keyword || keyword == "") {
-            self.resetSearch()
-          } else {
-            self.limit = 0
-            self.searchKeyword = keyword
-            self.topicData = []
-            self.fetchUrl = `/api/idol/uwasa/pages/{limit}?uwasaKeyword=${keyword}`
-            self.infiniteId += 1
-            
-          }
-        }
+      if(!keyword || keyword == "") {
+        this.resetSearch()
+      } else {
+        this.limit = 0
+        this.searchKeyword = keyword
+        this.topicData = []
+
+        const target = category == "내용" ? "uwasaKeyword" : category == "이름" ? "idolKeyword" : ""
+        this.fetchUrl = `/api/idol/uwasa/pages/{limit}?${target}=${keyword}`
+        this.infiniteId += 1
         
       }
 
-       task[category]();
+    },
+    doAllOrder(order) {
+
+      this.resetSearch(order == "desc" ? true : order == "asc" ? false : false)
 
     },
     infiniteHandler($state) {

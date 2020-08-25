@@ -34,6 +34,8 @@
             }
             getTitle().then(text => {
                 this.welcomeMessage = text
+                // 제목 설정
+                document.title = text
             })
         }
         
