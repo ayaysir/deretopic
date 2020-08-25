@@ -24,6 +24,10 @@ public class UwasaEntityService {
     @Transactional
     public Long save(UwasaEntitySaveDTO uwasaEntitySaveDTO) {
         Long idolId = uwasaEntitySaveDTO.getIdolId();
+        System.out.println("idol id >>>>> " + idolId);
+        if(idolId == null) {
+
+        }
         IdolEntity idol = idolEntityRepository.findById(idolId)
                 .orElseThrow(() -> new IllegalStateException("아이돌이 없습니다. id:" + idolId));
         uwasaEntitySaveDTO.setIdol(idol);

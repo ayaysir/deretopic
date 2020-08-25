@@ -71,6 +71,7 @@ public class IdolApiControllerTest {
                 .ttsAudioBase64("")
                 .uwasaJa(uwasaJa)
                 .uwasaKo(uwasaKo)
+                .idolId(1l)
                 .build();
 
         String url = "http://localhost:" + port + "/api/idol/uwasa";

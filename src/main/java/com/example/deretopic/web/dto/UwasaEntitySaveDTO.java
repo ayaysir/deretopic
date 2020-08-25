@@ -34,6 +34,7 @@ public class UwasaEntitySaveDTO {
         this.topicNum = topicNum;
         this.ttsAudioBase64 = ttsAudioBase64;
         this.tempHash = tempHash;
+        this.idolId = idolId;
     }
 
     public UwasaEntity toEntity() {
