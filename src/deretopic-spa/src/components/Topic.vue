@@ -1,6 +1,7 @@
 <template>
   <div class="topic">
         <audio id="tts-audio-main"></audio>
+        <TopicSearch v-on:search="doSearch" />
         <div class="each-row" v-for="(uwasa, rowIndex) in lineCarriagedTopicData" v-bind:key="rowIndex">
           <div class="idol-name"><a class="idol-link" :href="'/api/idol/redirect/' + uwasa.idolNameJa" target="_blank">{{uwasa.idolNameJa}}</a></div>
           <div class="topic-num"><span>{{uwasa.topicNum}}</span></div>
@@ -14,7 +15,7 @@
             <p class="topic-ko"><span v-html="uwasa.uwasaKo"></span></p>
           </div>
         </div>
-        <infinite-loading @infinite="infiniteHandler" spinner="waveDots">
+        <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler" spinner="waveDots">
           <div slot="no-more" style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px;">목록의 끝입니다 :)</div>
         </infinite-loading>
   </div>
@@ -24,85 +25,63 @@
 
 import InfiniteLoading from 'vue-infinite-loading';
 
+import TopicSearch from "@/components/TopicSearch.vue";
+
 export default {
 
   name: 'Topic',
   data() {
       return {
           topicData: [],
-          limit: 1
+          limit: 0,
+          fetchUrl: `/api/idol/uwasa/pages/{limit}`,
+          searchKeyword: "",
+          infiniteId: +new Date()
       }
   },
   created() {
-
-      async function getTopicFromApi() {
-          try {
-              const init = await fetch(`/api/idol/uwasa/pages/0`, {method: "GET"})
-              const data = await init.json()
-
-              return data
-          } catch(exc) {
-              console.error(exc)
-          }
-      }
-
-      getTopicFromApi().then(data => {
-          console.log("fromAPI", data)
-          this.topicData = data
-      })
+      
       
   },
   mounted() {
-    // async function get() {
-    //   const init = await fetch(`/api/idol/tts/島村卯月/1`, {method: "get"})
-    //   const blob = await init.blob()
-
-    //   // use blob ...
-
-    //   // *** 예제: 함수가 실행되면 파일 다운로드 바로 되게 ***
-
-    //   // 파일이름 가져오기
-    //   const disposition = init.headers.get("content-disposition")
-
-    //   let fileName = "file"
-    //   if(disposition && disposition.indexOf('attachment') !== -1) {
-    //     const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
-    //     const matches = filenameRegex.exec(disposition)
-
-    //     if (matches != null && matches[1]) {
-    //       fileName = matches[1].replace(/['"]/g, '')
-    //     } 
-    //   }
-
-    //   // console.log(fileName, await blob)
-        
-    //   // 가상 링크 DOM 만들어서 다운로드 실행
-    //   const url = URL.createObjectURL(await blob)
-    //   const a = document.createElement("a")
-    //   a.href = url
-    //   a.download = fileName
-    //   document.body.appendChild(a)
-    //   a.click()
-    //   window.URL.revokeObjectURL(url)
-    // }
-
-    // get()
   },
   components: {
-    InfiniteLoading
+    InfiniteLoading,
+    TopicSearch
   },
   computed: {
     lineCarriagedTopicData() {
       const data = JSON.parse(JSON.stringify(this.topicData))
+      const keyword = this.searchKeyword
+      const regex = new RegExp(keyword, "ig")
+      console.log("현재 검색어  ", keyword)
       return data.map(v => {
         v.uwasaJa = v.uwasaJa.replace(/(?:\\r\\n|\\r|\\n|\r\n|\r|\n)/g, "<br>")
         v.uwasaKo = v.uwasaKo.replace(/(?:\\r\\n|\\r|\\n|\r\n|\r|\n)/g, "<br>")
+
+        // 검색어가 있는 겅우 하이라이트
+        if(keyword && keyword != "") {
+          console.log("e")
+          v.uwasaJa = v.uwasaJa.replace(regex, "<span class='search-highlight'>" + keyword + "</span>")
+          v.uwasaKo = v.uwasaKo.replace(regex, "<span class='search-highlight'>" + keyword + "</span>")
+        }
+        
         return v
       })
     }
   },
 
   methods: {
+    async getTopicFromApi(fetchUrl) {
+      try {
+          const init = await fetch(fetchUrl, {method: "GET"})
+          const data = await init.json()
+
+          return data
+      } catch(exc) {
+          console.error(exc)
+      }
+    },
     speak(text, opt_prop) {
       if (typeof SpeechSynthesisUtterance === "undefined" || typeof window.speechSynthesis === "undefined") {
         alert("이 브라우저는 음성 합성을 지원하지 않습니다.")
@@ -133,12 +112,37 @@ export default {
       mainAudio.play()
       
     },
+    doSearch(category, keyword) {
+      console.log(category, keyword)
+
+      const self = this
+      const task = {
+        "내용" () {
+          if(!keyword || keyword == "") {
+            self.limit = 0
+            self.fetchUrl = `/api/idol/uwasa/pages/{limit}`
+            self.topicData = []
+            self.infiniteId += 1
+          } else {
+            self.limit = 0
+            self.searchKeyword = keyword
+            self.topicData = []
+            self.fetchUrl = `/api/idol/uwasa/pages/{limit}?uwasaKeyword=${keyword}`
+            self.infiniteId += 1
+            
+          }
+        }
+        
+      }
+
+       task[category]();
+
+    },
     infiniteHandler($state) {
       const EACH_LEN = 30
+      const fetchUrl = this.fetchUrl.replace("{limit}", this.limit)
 
-      fetch("/api/idol/uwasa/pages/" + (this.limit), {method: "get"}).then(resp => {
-        return resp.json()
-      }).then(data => {
+      this.getTopicFromApi(fetchUrl).then(data => {
         setTimeout(() => {
           if(data.length) {
             this.topicData = this.topicData.concat(data)
@@ -244,6 +248,7 @@ export default {
     cursor: pointer;
 
   }
+
   @media screen and (max-width: 768px) {
     /* 모바일에 사용될 스트일 시트를 여기에 작성합니다. */
     .topic {
@@ -260,6 +265,7 @@ export default {
     .topic-num {
       min-width: 30px;
     }
+
 
 
   }

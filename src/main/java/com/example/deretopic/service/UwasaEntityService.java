@@ -55,5 +55,17 @@ public class UwasaEntityService {
         return new UwasaEntityDTO(entity);
     }
 
+    @Transactional(readOnly = true)
+    public List<UwasaEntityDTO> findUwasaByKeyword(String keyword, PageRequest pageRequest) {
+        List<UwasaEntity> list = uwasaEntityRepository
+                .findByUwasaJaContainingOrUwasaKoContaining(keyword, keyword, pageRequest);
+
+        List<UwasaEntityDTO> dtoList = list.stream()
+                .map(UwasaEntityDTO::new)
+                .collect(Collectors.toList());
+
+        return dtoList;
+    }
+
 
 }

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 
@@ -46,5 +47,31 @@ public class UwasaEntityTest {
         assertThat(entity.getId()).isNotZero();
         assertThat(entity.getUwasaJa()).isEqualTo(uwasaJa);
         assertThat(entity.getTopicNum()).isEqualTo(topicNum);
+    }
+
+    @Test
+    public void search_uwasa_content() {
+        String idolNameJa = "ja";
+        Integer topicNum = 1;
+        String uwasaJa = "ee";
+        String uwasaKo = "kk";
+
+        // given
+        uwasaEntityRepository.save(UwasaEntity.builder()
+                .idolNameJa(idolNameJa)
+                .topicNum(topicNum)
+                .uwasaJa(uwasaJa)
+                .uwasaKo(uwasaKo)
+                .build());
+
+        // when
+        PageRequest pageRequest = PageRequest.of(0, 30);
+        List<UwasaEntity> list = uwasaEntityRepository
+                .findByUwasaJaContainingOrUwasaKoContaining(uwasaJa, uwasaJa, pageRequest);
+
+        // then
+        UwasaEntity entity = (UwasaEntity) list.get(0);
+        assertThat(entity.getId()).isNotZero();
+        assertThat(entity.getUwasaJa()).isEqualTo(uwasaJa);
     }
 }
