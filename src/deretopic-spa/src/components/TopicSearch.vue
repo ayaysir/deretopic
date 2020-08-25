@@ -1,13 +1,14 @@
 <template>
     <div class="search-box">
-        <div class="form-group">
+        <div class="form-group order">
             <label>전체 정렬</label>
             <select v-model="allOrderStatus" @change="allOrder">
                 <option disabled value="no">-- 전체 목록 정렬 --</option>
                 <option selected value="asc">오름차순</option>
                 <option value="desc">내림차순</option>
             </select>
-
+        </div>
+        <div class="form-group search">
             <label>소문 검색</label>
             <select v-model="searchCategory">
                 <option selected value="내용">소문 내용</option>
@@ -53,6 +54,19 @@ export default {
 
     .search-box .form-group * {
         margin: 0px 5px;
+    }
+
+    .form-group.order {
+        float: left;
+    }
+
+    @media screen and (-webkit-min-device-pixel-ratio:0) { 
+        .form-group.order {
+            float: none;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
     }
 
 </style>
