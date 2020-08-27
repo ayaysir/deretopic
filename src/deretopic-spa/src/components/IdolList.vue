@@ -11,6 +11,7 @@
                     <td>{{idol.id}}</td>
                     <td>{{idol.name}}</td>
                     <td>{{idol.nameKo}}</td>
+                    <td><a :href="'/v/idol/update/' + idol.id">[편집]</a></td>
                 </tr>
             </tbody>
         </table>
@@ -41,7 +42,5 @@ export default {
 </script>
 
 <style scoped>
-    .idol-list {
-        margin: 0px auto;
-    }
+    
 </style>

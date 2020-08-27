@@ -37,4 +37,11 @@ public class IdolEntityService {
                 .collect(Collectors.toList());
 
     }
+
+    public IdolResponseDTO findById(Long id) {
+        IdolEntity entity = idolEntityRepository.findById(id)
+                .orElseThrow(() ->  new IllegalStateException("아이돌이 없습니다. id=" + id));
+        return new IdolResponseDTO(entity);
+    }
+
 }

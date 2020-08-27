@@ -106,6 +106,7 @@ export default {
 
                 if(file.type != "audio/mpeg" || file.size > 300000) {
                     alert("파일이 mp3가 아니거나 사이즈가 너무 큽니다.")
+                    e.target.value = ""
                     return false
                 }
 

@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Setter
 @ToString
 @NoArgsConstructor
-public class IdolResponseDTO {
+public class IdolRequestDTO {
     private Long id;
 
     private String name;
@@ -44,7 +44,9 @@ public class IdolResponseDTO {
 
     private String refKeyword;
 
-    public IdolResponseDTO(IdolEntity idolEntity) {
+    private String puchiBase64;
+
+    public IdolRequestDTO(IdolEntity idolEntity) {
         this.id = idolEntity.getId();
         this.name = idolEntity.getName();
         this.nameEn = idolEntity.getNameEn();
@@ -64,11 +66,12 @@ public class IdolResponseDTO {
     }
 
     @Builder
-    public IdolResponseDTO(Long id, String name, String nameEn, String nameKo,
-                           Integer age, LocalDate birthday, String birthPlace,
-                           BloodType bloodType, Integer height, Integer weight,
-                           ThreeSize threeSize, Constellation constellation, String hobby,
-                           IdolType idolType, String note, String refKeyword) {
+    public IdolRequestDTO(Long id, String name, String nameEn, String nameKo,
+                          Integer age, LocalDate birthday, String birthPlace,
+                          BloodType bloodType, Integer height, Integer weight,
+                          ThreeSize threeSize, Constellation constellation, String hobby,
+                          IdolType idolType, String note, String refKeyword,
+                          String puchiBase64) {
         this.id = id;
         this.name = name;
         this.nameEn = nameEn;
@@ -85,6 +88,7 @@ public class IdolResponseDTO {
         this.idolType = idolType;
         this.note = note;
         this.refKeyword = refKeyword;
+        this.puchiBase64 = puchiBase64;
     }
 
 }

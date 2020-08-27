@@ -4,7 +4,8 @@ import Router from 'vue-router'
 import Topic from "./../components/Topic.vue"
 import HelloWorld from "@/components/HelloWorld.vue"
 import IdolList from "@/components/IdolList.vue"
-import WriteUwasa from "@/components/WriteUwasa.vue"
+import WriteUwasa from "@/components/WriteUwasa.vue" 
+import UpdateIdol from "@/components/UpdateIdol.vue" 
 
 Vue.use(Router)
 
@@ -35,6 +36,11 @@ export default new Router({
             path: "/v/write-uwasa",
             name: "Write Uwasa",
             component: WriteUwasa
+        },
+        {
+            path: "/v/idol/update/:id",
+            name: "Update Idol",
+            component: UpdateIdol
         },
 
     ]

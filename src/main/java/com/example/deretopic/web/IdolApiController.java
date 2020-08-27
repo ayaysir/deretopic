@@ -2,22 +2,21 @@ package com.example.deretopic.web;
 
 import com.example.deretopic.service.IdolEntityService;
 import com.example.deretopic.service.UwasaEntityService;
+import com.example.deretopic.util.FileIOUtil;
 import com.example.deretopic.util.HashUtil;
-import com.example.deretopic.web.dto.IdolSimpleResponseDTO;
-import com.example.deretopic.web.dto.UwasaEntityDTO;
-import com.example.deretopic.web.dto.UwasaEntitySaveDTO;
+import com.example.deretopic.web.dto.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.filechooser.FileSystemView;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -125,14 +124,9 @@ public class IdolApiController {
         try {
             String ttsFileName = "voice_" + insertResult + "_"
                     + uwasa.getIdol().getName() + "_" + uwasa.getTopicNum() + ".mp3";
-            File ttsFile = new File(FileSystemView.getFileSystemView().getHomeDirectory()
-                    + "/deretopic/resources/tts/" + ttsFileName);
+            String relPath = "resources/tts";
 
-            Base64.Decoder decoder = Base64.getDecoder();
-            byte[] decodedBytes = decoder.decode(ttsAudioBase64.getBytes());
-            FileOutputStream fileOutputStream = new FileOutputStream(ttsFile);
-            fileOutputStream.write(decodedBytes);
-            fileOutputStream.close();
+            FileIOUtil.writeFileToResourceFromBASE64Bytes(relPath, ttsFileName, ttsAudioBase64.getBytes());
 
             result.put("isTTSInserted", true);
             result.put("uploadStatus", "AllSuccess");
@@ -143,6 +137,41 @@ public class IdolApiController {
             result.put("uploadStatus", "DataInsertedButFileIsNotUploaded");
             result.put("isTTSInserted", false);
         }
+
+        return result;
+    }
+
+    @GetMapping("/api/idol/tts/{id}")
+    @ResponseStatus(HttpStatus.OK)    // Thymeleaf 사용시 이것을 사용해야 에러가 발생하지 않음
+    public ResponseEntity<Resource> getTTS(HttpServletRequest request,
+                                           @PathVariable Long id) throws Exception {
+        String relPath = "resources/tts";
+
+        UwasaEntityDTO dto = uwasaEntityService.findById(id);
+
+        if (dto.getTtsFileName() != null) {
+            return FileIOUtil.flushFileFromResources(relPath, dto.getTtsFileName(), request);
+        } else {
+            return ResponseEntity.noContent().build();
+        }
+
+    }
+
+    @GetMapping("/api/idol/profile/{id}")
+    public IdolResponseDTO getIdolById(@PathVariable Long id) {
+        return idolEntityService.findById(id);
+    }
+
+    @PutMapping("/api/idol/profile/{id}")
+    public Map<String, Object> putIdolOnlyPuchi(@PathVariable Long id, @RequestBody IdolRequestDTO dto) throws IOException {
+        System.out.println(dto.getPuchiBase64());
+        Map<String, Object> result = new HashMap<>();
+
+        String relPath = "resources/profile_puchi_normal";
+        FileIOUtil.writeFileToResourceFromBASE64Bytes(relPath, id + ".png", dto.getPuchiBase64().getBytes());
+
+        result.put("id", id);
+        result.put("result", "OK");
 
         return result;
     }
