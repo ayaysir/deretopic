@@ -5,6 +5,10 @@
             <label for="puchi">푸치 사진 변경</label>
             <input id="file-puchi" type="file" @change="handleFile">
             <button @click="sendData">전송</button>
+            <p>
+                <router-link :to="'/v/idol/update/' + (idol.id - 1 != 0) ? idol.id - 1 : 1">이전 아이돌 </router-link>
+                <router-link :to="'/v/idol/update/' + (idol.id + 1)"> 다음 아이돌</router-link>
+            </p>
         </div>
         <table>
             <thead>
@@ -44,7 +48,6 @@ export default {
             const data = await init.json()
             this.idol = await data
 
-            console.log(data)
         },
 
         handleFile(e) {
@@ -113,9 +116,12 @@ export default {
         width: 500px;
         margin-top: 10px;
     }
+    .form-puchi label {
+        margin: 10px;
+    }
     .form-puchi * {
         margin: 0px auto;
-        display: block;
+        padding: 2px;
     }
 
     

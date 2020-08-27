@@ -11,7 +11,7 @@
                     <td>{{idol.id}}</td>
                     <td>{{idol.name}}</td>
                     <td>{{idol.nameKo}}</td>
-                    <td><a :href="'/v/idol/update/' + idol.id">[편집]</a></td>
+                    <td><router-link :to="'/v/idol/update/' + idol.id">[편집]</router-link></td>
                 </tr>
             </tbody>
         </table>

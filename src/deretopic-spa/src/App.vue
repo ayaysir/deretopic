@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <Header :msg="welcomeMessage"></Header>
-        <router-view :msg="welcomeMessage"/>
+        <router-view :msg="welcomeMessage" :key="$route.fullPath"/>
         <!-- <Topic /> -->
     </div>
 </template>
