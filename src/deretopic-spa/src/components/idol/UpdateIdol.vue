@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="form-group form-puchi">
-            <img src="https://dummyimage.com/128x172/d68bd6/000000.png&text=puchi">
+            <ProfilePuchi v-if="idol.id" :idol="idol" :customImage="customImage"/>
             <label for="puchi">푸치 사진 변경</label>
             <input id="file-puchi" type="file" @change="handleFile">
             <button @click="sendData">전송</button>
@@ -21,12 +21,17 @@
 </template>
 
 <script>
+import ProfilePuchi from "@/components/common/ProfilePuchi.vue";
 export default {
     data() {
         return {
             idol: {},
-            puchiBase64: null
+            puchiBase64: null,
+            customImage: null
         }
+    },
+    components: {
+        ProfilePuchi
     },
     created() {
         console.log("routed ", this.$route)
@@ -47,6 +52,7 @@ export default {
 
             if(files.length > 0) {
                 const file = e.target.files[0]
+                this.customImage = file
 
                 if(file.type != "image/png" || file.size > 300000) {
                     alert("파일이 png가 아니거나 사이즈가 너무 큽니다.")
@@ -69,7 +75,7 @@ export default {
                 reader.readAsDataURL(file)
 
             }
-        },
+        }, 
 
         async sendData() {
             // private String idolNameJa, uwasaJa, uwasaKo;
@@ -95,9 +101,7 @@ export default {
 
             const data = await initFetch.json()
             alert(JSON.stringify(data))
-            
-            
-        }
+        },
     }
 }
 </script>

@@ -3,7 +3,7 @@
         <audio id="tts-audio-main"></audio>
         <TopicSearch v-on:search="doSearch" v-on:allOrder="doAllOrder"/>
         <div class="each-row" v-for="(uwasa, rowIndex) in lineCarriagedTopicData" v-bind:key="rowIndex">
-          <ProfileMini :idol="uwasa.idol"/>
+          <ProfilePuchi :idol="uwasa.idol"/>
           <div class="topic-num"><span>{{uwasa.topicNum}}</span></div>
           <div class="topic-content">
             <p class="label-lang">Ja</p>
@@ -25,8 +25,8 @@
 
 import InfiniteLoading from 'vue-infinite-loading';
 
-import TopicSearch from "@/components/TopicSearch.vue";
-import ProfileMini from "@/components/ProfileMini.vue";
+import TopicSearch from "@/components/topic/TopicSearch.vue";
+import ProfilePuchi from "@/components/common/ProfilePuchi.vue";
 
 export default {
 
@@ -49,7 +49,7 @@ export default {
   components: {
     InfiniteLoading,
     TopicSearch,
-    ProfileMini
+    ProfilePuchi
   },
   computed: {
     lineCarriagedTopicData() {

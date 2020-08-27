@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Topic from "./../components/Topic.vue"
+import Topic from "@/components/topic/Topic.vue"
 import HelloWorld from "@/components/HelloWorld.vue"
-import IdolList from "@/components/IdolList.vue"
-import WriteUwasa from "@/components/WriteUwasa.vue" 
-import UpdateIdol from "@/components/UpdateIdol.vue" 
+import IdolList from "@/components/idol/IdolList.vue"
+import WriteUwasa from "@/components/topic/WriteUwasa.vue" 
+import UpdateIdol from "@/components/idol/UpdateIdol.vue" 
 
 Vue.use(Router)
 

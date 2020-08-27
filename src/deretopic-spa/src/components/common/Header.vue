@@ -1,7 +1,7 @@
 <template>
     <nav class="nav">
         <div class="nav-header">
-            <img src="./../assets/logo.png"> <h2>{{msg}}</h2>
+            <img src="@/assets/logo.png"> <h2>{{msg}}</h2>
         </div>
         
         <ul>
