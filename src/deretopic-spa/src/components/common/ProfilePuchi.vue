@@ -21,6 +21,9 @@ export default {
     methods: {
         changeDefaultImage() {
             this.currentUrl = this.defaultImgUrl
+        },
+        setPuchiImage(url) {
+            this.currentUrl = url
         }
     },
 
@@ -36,13 +39,16 @@ export default {
     },
 
     watch: {
-        customImage: function (file) {
+        customImage: function(file) {
             // console.log("changed", newVal, oldVal)
             const reader = new FileReader
             reader.onload = () => {
                 this.getPuchiImage = reader.result
             }
             reader.readAsDataURL(file)
+        },
+        idol: function(idol) {
+            this.currentUrl = "/api/idol/puchi/" + idol.id
         }
     }
 }

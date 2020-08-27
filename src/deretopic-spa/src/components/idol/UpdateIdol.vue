@@ -6,8 +6,10 @@
             <input id="file-puchi" type="file" @change="handleFile">
             <button @click="sendData">전송</button>
             <p>
-                <router-link :to="'/v/idol/update/' + (idol.id - 1 != 0) ? idol.id - 1 : 1">이전 아이돌 </router-link>
-                <router-link :to="'/v/idol/update/' + (idol.id + 1)"> 다음 아이돌</router-link>
+                <!-- <router-link :to="'/v/idol/update/' + ((idol.id - 1 != 0) ? idol.id - 1 : 1)">이전 아이돌 </router-link>
+                <router-link :to="'/v/idol/update/' + (idol.id + 1)"> 다음 아이돌</router-link> -->
+                <button @click="getIdolById(idol.id - 1)">이전 아이돌</button>
+                <button @click="getIdolById(idol.id + 1)">다음 아이돌</button>
             </p>
         </div>
         <table>
@@ -44,10 +46,28 @@ export default {
 
     methods: {
         async getIdolById(id) {
-            const init = await fetch("/api/idol/profile/" + id)
-            const data = await init.json()
-            this.idol = await data
+            try{
+                const init = await fetch("/api/idol/profile/" + id)
+                const data = await init.json()
+                if(init.status == 200) {
+                    this.idol = await data
+                    const currentUrl = window.location.href
 
+                    history.pushState(
+                        {},
+                        null,
+                        currentUrl.substr(0, currentUrl.lastIndexOf("/") + 1) + (this.idol.id)
+                    )
+                } else {
+                    alert("해당 아이디의 아이돌이 없습니다.")
+                    this.idol.id = 0
+                }
+
+                
+            } catch(exc) {
+                console.log(exc)
+            }
+            
         },
 
         handleFile(e) {
