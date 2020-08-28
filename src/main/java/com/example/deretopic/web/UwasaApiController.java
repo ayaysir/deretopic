@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -115,16 +116,18 @@ public class UwasaApiController {
 
     @GetMapping("/api/idol/tts/{id}")
     @ResponseStatus(HttpStatus.OK)    // Thymeleaf 사용시 이것을 사용해야 에러가 발생하지 않음
-    public ResponseEntity<Resource> getTTS(HttpServletRequest request,
+    public void getTTS(HttpServletRequest request, HttpServletResponse response,
                                            @PathVariable Long id) throws Exception {
         String relPath = "resources/tts";
 
         UwasaEntityDTO dto = uwasaEntityService.findById(id);
 
         if (dto.getTtsFileName() != null) {
-            return FileIOUtil.flushFileFromResources(relPath, dto.getTtsFileName(), request);
+            ServletOutputStream servletOutputStream = FileIOUtil
+                    .flushFromFileResourcesLegacy(relPath, dto.getTtsFileName(), request, response, "audio/mpeg");
+            servletOutputStream.flush();
         } else {
-            return ResponseEntity.noContent().build();
+            response.sendError(404);
         }
 
     }

@@ -6,7 +6,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.swing.filechooser.FileSystemView;
 import java.io.*;
 import java.net.URLEncoder;
@@ -22,7 +24,7 @@ public class FileIOUtil {
         System.out.println(">>>> fileAbsolutePath: " + fileAbsolutePath);
 
         File dir = new File(basePath + "/" + dirRelativePath);
-        if(!dir.exists()) {
+        if (!dir.exists()) {
             dir.mkdirs();
         }
 
@@ -30,8 +32,8 @@ public class FileIOUtil {
     }
 
     public static ResponseEntity<Resource> flushFileFromResources(String dirRelativePath,
-                                                          String downloadName,
-                                                          HttpServletRequest request) throws Exception {
+                                                                  String downloadName,
+                                                                  HttpServletRequest request) throws Exception {
 
         File file = getFileFromRelativePath(dirRelativePath, downloadName);
 
@@ -61,8 +63,8 @@ public class FileIOUtil {
     }
 
     public static File writeFileToResourceFromBASE64Bytes(String dirRelativePath,
-                                                   String fileName,
-                                                   byte[] encodedBytes) throws IOException {
+                                                          String fileName,
+                                                          byte[] encodedBytes) throws IOException {
 
         File file = getFileFromRelativePath(dirRelativePath, fileName);
 
@@ -74,6 +76,45 @@ public class FileIOUtil {
         fileOutputStream.close();
 
         return file;
+
+    }
+
+    public static ServletOutputStream flushFromFileResourcesLegacy(String dirRelativePath,
+                                                            String downloadName,
+                                                            HttpServletRequest request,
+                                                            HttpServletResponse response,
+                                                            String contentType) throws IOException {
+
+        File f = getFileFromRelativePath(dirRelativePath, downloadName);
+
+        String browser = request.getHeader("User-Agent");
+        //파일 인코딩
+        if (browser.contains("MSIE") || browser.contains("Trident") || browser.contains("Chrome")) {
+            //브라우저 확인 파일명 encode
+            downloadName = URLEncoder.encode(f.getName(), "UTF-8").replaceAll("\\+", "%20");
+        } else {
+            downloadName = new String(f.getName().getBytes("UTF-8"), "ISO-8859-1");
+
+        }
+        response.setHeader("Content-Disposition", "attachment;filename=\"" + downloadName + "\"");
+        response.setContentType(contentType);
+        response.setHeader("Content-Transfer-Encoding", "binary;");
+
+        try (FileInputStream fis = new FileInputStream(f);
+             ServletOutputStream sos = response.getOutputStream();) {
+
+            byte[] b = new byte[1024];
+            int data = 0;
+
+            while ((data = (fis.read(b, 0, b.length))) != -1) {
+                sos.write(b, 0, data);
+            }
+
+            return sos;
+
+        } catch (Exception e) {
+            throw e;
+        }
 
     }
 }
