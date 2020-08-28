@@ -84,11 +84,13 @@
                     <th scope=col>몸무게</th>
                     <td><input type="number" v-model="idol.weight"></td>
                 </tr>
-                <tr th-if="idol.birthday">
+                <tr>
                     <th scope=col>생일</th>
                     <td>
-                        <input type="number" min="1" max="12" data-from="month" :value="idol.birthday.split('-')[1]" @change="modifyBirthday">월 
-                        <input type="number" min="1" max="31" data-from="day" :value="idol.birthday.split('-')[2]" @change="modifyBirthday"     >일
+                        <input type="number" min="1" max="12" data-from="month" 
+                            :value="idol.birthday ? idol.birthday.split('-')[1] : '0'" @change="modifyBirthday">월 
+                        <input type="number" min="1" max="31" data-from="day" 
+                            :value="idol.birthday ? idol.birthday.split('-')[2] : '0'" @change="modifyBirthday">일
                         <!-- <input type="text" v-model="modifiedBirthday"> -->
                     </td>
                 </tr>
@@ -282,7 +284,6 @@ export default {
     .form-puchi {
         margin: 0px auto;
         border: 1px solid gray;
-        width: 500px;
         margin-top: 10px;
     }
     .form-puchi label {

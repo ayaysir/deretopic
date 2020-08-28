@@ -187,7 +187,6 @@ export default {
     .form-puchi {
         margin: 0px auto;
         border: 1px solid gray;
-        width: 500px;
         margin-top: 10px;
     }
     .form-puchi label {
