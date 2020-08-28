@@ -87,10 +87,11 @@
                 <tr>
                     <th scope=col>생일</th>
                     <td>
-                        <input type="number" min="1" max="12" data-from="month" 
-                            :value="idol.birthday ? idol.birthday.split('-')[1] : '0'" @change="modifyBirthday">월 
+                        <input type="date" v-model="idol.birthday"> 
+                        <!-- <input type="number" min="1" max="12" data-from="month" 
+                            v-model="tempDate.m" @change="modifyBirthday">월 
                         <input type="number" min="1" max="31" data-from="day" 
-                            :value="idol.birthday ? idol.birthday.split('-')[2] : '0'" @change="modifyBirthday">일
+                            v-model="tempDate.d" @change="modifyBirthday">일 -->
                         <!-- <input type="text" v-model="modifiedBirthday"> -->
                     </td>
                 </tr>
@@ -162,6 +163,10 @@ export default {
             puchiBase64: null,
             customImage: null,
             insertInfo: null,
+            tempDate: {
+                m: 0,
+                d: 0
+            }
         }
     },
     components: {
@@ -171,6 +176,7 @@ export default {
         console.log("routed ", this.$route)
         this.getIdolById(this.$route.params.id)
         this.getEnumInfo()
+        this.setBirthdayMonthAndDate()
     },
 
     methods: {
@@ -245,7 +251,6 @@ export default {
             } else {
                 dataObj.puchiBase64 = ""
             }
-            
 
             const initFetch = await fetch(`/api/idol/profile/${this.idol.id}`, {
                 method: "PUT",
@@ -258,24 +263,9 @@ export default {
             const data = await initFetch.json()
             alert(JSON.stringify(data))
         },
-        modifyBirthday($event) {
-            console.log($event)
-            const evTarget = $event.target
-            if(this.idol.birthday) {
-                const [y, m, d] = this.idol.birthday.split("-")
-                if(evTarget.dataset.from == "month") {
-                    const paddedMonth = this.paddingZero(evTarget.value)
-                    this.idol.birthday = [y, paddedMonth, d].join("-")
-                } else {
-                    const paddedDay = this.paddingZero(evTarget.value)
-                    this.idol.birthday = [y, m, paddedDay].join("-")
-                }
-            }
-            
-        },
         paddingZero(value) {
            return (value.length < 2) ? ("0" + value) : value;
-       }
+        },
     }
 }
 </script>
