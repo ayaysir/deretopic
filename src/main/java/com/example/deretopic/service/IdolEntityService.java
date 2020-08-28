@@ -1,8 +1,8 @@
 package com.example.deretopic.service;
 
-import com.example.deretopic.domain.common.ThreeSize;
 import com.example.deretopic.domain.idol.IdolEntity;
 import com.example.deretopic.domain.idol.IdolEntityRepository;
+import com.example.deretopic.web.dto.IdolRequestDTO;
 import com.example.deretopic.web.dto.IdolResponseDTO;
 import com.example.deretopic.web.dto.IdolSimpleResponseDTO;
 import lombok.RequiredArgsConstructor;
@@ -19,11 +19,16 @@ public class IdolEntityService {
     private final IdolEntityRepository idolEntityRepository;
 
     @Transactional
-    public Long save(String name, String nameKo) {
-        return idolEntityRepository.save(IdolEntity.builder()
-                .name(name).nameKo(nameKo)
-                .threeSize(ThreeSize.builder().bust(0).hip(0).waist(0).build())
-                .build()).getId();
+    public Long save(IdolRequestDTO dto) {
+        return idolEntityRepository.save(dto.toEntity()).getId();
+    }
+
+    @Transactional
+    public Long update(IdolRequestDTO dto) {
+        IdolEntity entity = idolEntityRepository.findById(dto.getId())
+                .orElseThrow(() -> new IllegalStateException("아이돌이 없습니다. id: " + dto.getId()) );
+        entity.update(dto);
+        return entity.getId();
     }
 
     public String findNameKoByNameJa(String nameJa) throws IndexOutOfBoundsException{

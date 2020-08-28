@@ -6,6 +6,7 @@ import HelloWorld from "@/components/HelloWorld.vue"
 import IdolList from "@/components/idol/IdolList.vue"
 import WriteUwasa from "@/components/topic/WriteUwasa.vue" 
 import UpdateIdol from "@/components/idol/UpdateIdol.vue" 
+import ViewIdol from "@/components/idol/ViewIdol.vue"
 
 Vue.use(Router)
 
@@ -41,6 +42,11 @@ export default new Router({
             path: "/v/idol/update/:id",
             name: "Update Idol",
             component: UpdateIdol
+        },
+        {
+            path: "/v/idol/view/:id",
+            name: "View Idol",
+            component: ViewIdol
         },
 
     ]

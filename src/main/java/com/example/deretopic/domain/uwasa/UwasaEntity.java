@@ -1,5 +1,6 @@
 package com.example.deretopic.domain.uwasa;
 
+import com.example.deretopic.domain.BaseTimeEntity;
 import com.example.deretopic.domain.idol.IdolEntity;
 import com.example.deretopic.web.dto.UwasaEntityDTO;
 import lombok.Builder;
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @Getter
 @NoArgsConstructor
 @Entity
-public class UwasaEntity {
+public class UwasaEntity extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

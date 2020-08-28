@@ -1,13 +1,13 @@
 package com.example.deretopic.web.dto;
 
-import com.example.deretopic.domain.common.BloodType;
-import com.example.deretopic.domain.common.Constellation;
-import com.example.deretopic.domain.common.IdolType;
-import com.example.deretopic.domain.common.ThreeSize;
+import com.example.deretopic.domain.common.*;
 import com.example.deretopic.domain.idol.IdolEntity;
 import lombok.*;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -44,6 +44,19 @@ public class IdolResponseDTO {
 
     private String refKeyword;
 
+    // date
+    private LocalDateTime createdDate;
+    private LocalDateTime modifiedDate;
+
+
+    // 2020-08-28
+    private String nameFurigana;
+    private String imageColor;
+    private String voiceActorKo;
+
+    private Handedness handedness;
+
+
     public IdolResponseDTO(IdolEntity idolEntity) {
         this.id = idolEntity.getId();
         this.name = idolEntity.getName();
@@ -61,30 +74,17 @@ public class IdolResponseDTO {
         this.idolType = idolEntity.getIdolType();
         this.note = idolEntity.getNote();
         this.refKeyword = idolEntity.getRefKeyword();
+
+        this.createdDate = idolEntity.getCreatedDate();
+        this.createdDate = idolEntity.getModifiedDate();
+
+        this.nameFurigana = idolEntity.getNameFurigana();
+        this.imageColor = idolEntity.getImageColor();
+        this.voiceActorKo = idolEntity.getVoiceActorKo();
+
+        this.handedness = idolEntity.getHandedness();
+
     }
 
-    @Builder
-    public IdolResponseDTO(Long id, String name, String nameEn, String nameKo,
-                           Integer age, LocalDate birthday, String birthPlace,
-                           BloodType bloodType, Integer height, Integer weight,
-                           ThreeSize threeSize, Constellation constellation, String hobby,
-                           IdolType idolType, String note, String refKeyword) {
-        this.id = id;
-        this.name = name;
-        this.nameEn = nameEn;
-        this.nameKo = nameKo;
-        this.age = age;
-        this.birthday = birthday;
-        this.birthPlace = birthPlace;
-        this.bloodType = bloodType;
-        this.height = height;
-        this.weight = weight;
-        this.threeSize = threeSize;
-        this.constellation = constellation;
-        this.hobby = hobby;
-        this.idolType = idolType;
-        this.note = note;
-        this.refKeyword = refKeyword;
-    }
 
 }

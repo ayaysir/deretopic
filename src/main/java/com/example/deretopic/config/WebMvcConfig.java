@@ -1,4 +1,4 @@
-package com.example.deretopic.domain.config;
+package com.example.deretopic.config;
 
 import java.io.IOException;
 

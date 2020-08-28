@@ -3,19 +3,19 @@ package com.example.deretopic.domain.common;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum IdolType {
-    CUTE("큐트", "", ""),
-    COOL("", "쿨", ""),
-    PASSION("패션", "", ""),
+public enum Handedness {
+    LEFT("왼손잡이", "", ""),
+    RIGHT("오른손잡이", "", ""),
+    BOTH("양손잡이", "", ""),
     OTHER("기타", "", "");
 
     private String[] strings;
 
-    IdolType(String... strings) {
+    Handedness(String... strings) {
         this.strings = strings;
     }
 
-    public Map<String, String> getIdolTypeStrings() {
+    public Map<String, String> getHandednessStrings() {
         Map<String, String> result = new HashMap<>();
         result.put("ko", strings[0]);
         result.put("en", strings[1]);

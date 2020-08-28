@@ -1,6 +1,6 @@
 <template>
     <div>
-        <table class="idol-list"> 
+        <table class="idol-list" v-if="idols.length != 0"> 
             <thead>
                 <th>No.</th>
                 <th>이름</th>
@@ -11,32 +11,55 @@
                     <td>{{idol.id}}</td>
                     <td>{{idol.name}}</td>
                     <td>{{idol.nameKo}}</td>
+                    <td><router-link :to="'/v/idol/view/' + idol.id">[보기]</router-link></td>
                     <td><router-link :to="'/v/idol/update/' + idol.id">[편집]</router-link></td>
                 </tr>
             </tbody>
         </table>
+        <infinite-loading @infinite="infiniteHandler" spinner="waveDots">
+        </infinite-loading>
     </div>
     
 </template>
 
 <script>
+import InfiniteLoading from 'vue-infinite-loading';
+
 export default {
     data() {
         return {
-            idols: []
+            idols: [],
+            requestCount: 0
         }
     },
     created() {
-        this.getIdol()
+        // this.getIdol()
+    },
+    components: {
+        InfiniteLoading
     },
     methods: {
         async getIdol() {
             const init = await fetch("/api/idol/simple")
-            const data = await init.json()
-            this.idols = await data
+            return await init.json()
+        }, 
+        async infiniteHandler($state) {
 
-            console.log(data)
+            if(this.requestCount == 0) {
+                $state.loaded()
+                this.requestCount += 1
+            } else {
+                const data = await this.getIdol()
+                setTimeout(() => {
+                    if(data.length) {
+                        this.idols = data
+                    }
+                    $state.complete()
+                }, 500)
+            }
+            
         }
+        
     }
 }
 </script>

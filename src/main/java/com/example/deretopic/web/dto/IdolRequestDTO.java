@@ -1,12 +1,11 @@
 package com.example.deretopic.web.dto;
 
-import com.example.deretopic.domain.common.BloodType;
-import com.example.deretopic.domain.common.Constellation;
-import com.example.deretopic.domain.common.IdolType;
-import com.example.deretopic.domain.common.ThreeSize;
+import com.example.deretopic.domain.common.*;
 import com.example.deretopic.domain.idol.IdolEntity;
 import lombok.*;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.time.LocalDate;
 
 @Getter
@@ -44,7 +43,16 @@ public class IdolRequestDTO {
 
     private String refKeyword;
 
+    // DTO 전용
     private String puchiBase64;
+
+    // 2020-08-28
+    private String nameFurigana;
+    private String imageColor;
+    private String voiceActorKo;
+
+    @Enumerated(EnumType.STRING)
+    private Handedness handedness;
 
     public IdolRequestDTO(IdolEntity idolEntity) {
         this.id = idolEntity.getId();
@@ -63,15 +71,24 @@ public class IdolRequestDTO {
         this.idolType = idolEntity.getIdolType();
         this.note = idolEntity.getNote();
         this.refKeyword = idolEntity.getRefKeyword();
+
+        // 2020-08-28
+        this.nameFurigana = nameFurigana;
+        this.imageColor = imageColor;
+        this.voiceActorKo = voiceActorKo;
+
+        this.handedness = handedness;
     }
 
     @Builder
-    public IdolRequestDTO(Long id, String name, String nameEn, String nameKo,
+    public IdolRequestDTO(Long id,
+                          String name, String nameEn, String nameKo,
                           Integer age, LocalDate birthday, String birthPlace,
                           BloodType bloodType, Integer height, Integer weight,
-                          ThreeSize threeSize, Constellation constellation, String hobby,
-                          IdolType idolType, String note, String refKeyword,
-                          String puchiBase64) {
+                          ThreeSize threeSize, Constellation constellation,
+                          String hobby, IdolType idolType, String note,
+                          String refKeyword, String puchiBase64, String nameFurigana,
+                          String imageColor, String voiceActorKo, Handedness handedness) {
         this.id = id;
         this.name = name;
         this.nameEn = nameEn;
@@ -89,6 +106,35 @@ public class IdolRequestDTO {
         this.note = note;
         this.refKeyword = refKeyword;
         this.puchiBase64 = puchiBase64;
+        this.nameFurigana = nameFurigana;
+        this.imageColor = imageColor;
+        this.voiceActorKo = voiceActorKo;
+        this.handedness = handedness;
+    }
+
+    public IdolEntity toEntity() {
+        return IdolEntity.builder()
+                .id(this.id)
+                .voiceActorKo(voiceActorKo)
+                .nameFurigana(nameFurigana)
+                .imageColor(imageColor)
+                .threeSize(threeSize)
+                .age(age)
+                .birthday(birthday)
+                .birthPlace(birthPlace)
+                .bloodType(bloodType)
+                .constellation(constellation)
+                .handedness(handedness)
+                .height(height)
+                .hobby(hobby)
+                .idolType(idolType)
+                .name(name)
+                .nameEn(nameEn)
+                .nameKo(nameKo)
+                .note(note)
+                .refKeyword(refKeyword)
+                .weight(weight)
+                .build();
     }
 
 }

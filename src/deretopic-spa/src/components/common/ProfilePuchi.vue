@@ -1,9 +1,10 @@
 <template>
     <div class="idol-name">
         <img class="puchi" ref="puchiImg" :src="getPuchiImage" @error="changeDefaultImage">
-        <p>
-        <a class="idol-link" :href="'/api/idol/redirect/' + idol.name" target="_blank">
-        {{idol.nameKo}}<br>({{idol.name}})</a>
+        <p>{{idol.nameKo}}<br>({{idol.name}})
+        <br><span class="link-small">
+            <router-link :to="'/v/idol/view/' + idol.id">[프로필]</router-link> &nbsp;
+            <a class="idol-link" :href="'/api/idol/redirect/' + idol.name" target="_blank">[나무위키]</a></span>
         </p>
     </div>
 </template>
@@ -58,5 +59,9 @@ export default {
     .puchi {
         margin: 10px;
         height: calc(172px * 0.8);
+    }
+
+    .link-small {
+        font-size: 0.7em;
     }
 </style>

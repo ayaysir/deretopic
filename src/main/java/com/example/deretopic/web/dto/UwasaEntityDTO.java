@@ -5,6 +5,8 @@ import com.example.deretopic.domain.uwasa.UwasaEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Getter
 @NoArgsConstructor
 public class UwasaEntityDTO {
@@ -20,6 +22,9 @@ public class UwasaEntityDTO {
 
     private IdolEntity idol;
 
+    private LocalDateTime modifiedDate;
+
+
     public UwasaEntityDTO(UwasaEntity uwasaEntity) {
         this.id = uwasaEntity.getId();
         this.idolNameJa = uwasaEntity.getIdolNameJa();
@@ -29,5 +34,7 @@ public class UwasaEntityDTO {
         this.comment = uwasaEntity.getComment();
         this.ttsFileName = uwasaEntity.getTtsFileName();
         this.idol = uwasaEntity.getIdol();
+        this.modifiedDate = uwasaEntity.getModifiedDate();
+
     }
 }

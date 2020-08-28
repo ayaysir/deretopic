@@ -3,8 +3,10 @@ package com.example.deretopic.domain.common;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Getter
+@ToString
 @NoArgsConstructor
 public class ThreeSize {
     private int bust, waist, hip;
@@ -14,14 +16,5 @@ public class ThreeSize {
         this.bust = bust;
         this.waist = waist;
         this.hip = hip;
-    }
-
-    @Override
-    public String toString() {
-        return "ThreeSize{" +
-                "bust=" + bust +
-                ", waist=" + waist +
-                ", hip=" + hip +
-                '}';
     }
 }

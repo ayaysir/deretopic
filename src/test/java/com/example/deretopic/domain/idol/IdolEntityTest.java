@@ -1,17 +1,18 @@
 package com.example.deretopic.domain.idol;
 
-import com.example.deretopic.domain.common.BloodType;
-import com.example.deretopic.domain.common.Constellation;
-import com.example.deretopic.domain.common.IdolType;
-import com.example.deretopic.domain.common.ThreeSize;
+import com.example.deretopic.domain.common.*;
 import com.example.deretopic.domain.idol.IdolEntity;
 import com.example.deretopic.domain.idol.IdolEntityRepository;
+import com.example.deretopic.domain.uwasa.UwasaEntity;
+import com.example.deretopic.domain.uwasa.UwasaEntityRepository;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,8 +23,13 @@ public class IdolEntityTest {
     @Autowired
     IdolEntityRepository idolEntityRepository;
 
+    @Autowired
+    UwasaEntityRepository uwasaEntityRepository;
+
+    @BeforeEach
     @AfterEach
     public void cleanup() {
+        uwasaEntityRepository.deleteAll();
         idolEntityRepository.deleteAll();
     }
 
@@ -66,6 +72,13 @@ public class IdolEntityTest {
         Constellation constellation = Constellation.VIRGO;
         String hobby = "ホームパーティ,天体観測";
         IdolType idolType = IdolType.COOL;
+
+        Handedness handedness = Handedness.BOTH;
+        String imageColor = "#A8C0E6";
+        String nameFurigana = "アナスタシア";
+        String voiceActorKo = "우에사카 스미레";
+
+
         IdolEntity idolEntity = IdolEntity.builder()
                 .name(name)
                 .age(age)
@@ -78,7 +91,12 @@ public class IdolEntityTest {
                 .constellation(constellation)
                 .hobby(hobby)
                 .idolType(idolType)
+                .handedness(handedness)
+                .imageColor(imageColor)
+                .nameFurigana(nameFurigana)
+                .voiceActorKo(voiceActorKo)
                 .build();
+
         idolEntityRepository.save(idolEntity);
 
         // when
@@ -92,6 +110,10 @@ public class IdolEntityTest {
         assertThat(foundIdolEntity.getConstellation()).isEqualTo(Constellation.VIRGO);
         assertThat(foundIdolEntity.getThreeSize().getBust()).isEqualTo(80);
 
+        assertThat(foundIdolEntity.getCreatedDate())
+                .isAfter(LocalDateTime.of(2020,8,28,0,0,0));
+
+        System.out.println(foundIdolEntity);
 
     }
 
