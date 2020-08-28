@@ -3,8 +3,8 @@
         <div class="form-group form-puchi">
             <ProfilePuchi v-if="idol.id" :idol="idol" :customImage="customImage"/>
             <p>
-                <button @click="getIdolById(idol.id - 1)">이전 아이돌</button>
-                <button @click="getIdolById(idol.id + 1)">다음 아이돌</button>
+                <button v-if="idol.id > 1" @click="moveIdol(idol.id - 1)">이전 아이돌</button>
+                <button @click="moveIdol(idol.id + 1)">다음 아이돌</button>
             </p>
         </div>
 
@@ -42,11 +42,11 @@
                 </tr>
                 <tr>
                     <th scope=col>키</th>
-                    <td>{{idol.height}}</td>
+                    <td><span>{{idol.height}}</span> cm</td>
                 </tr>
                 <tr>
                     <th scope=col>몸무게</th>
-                    <td>{{idol.weight}}</td>
+                    <td><span>{{idol.weight}}</span> kg</td>
                 </tr>
                 <tr>
                     <th scope=col>생일</th>
@@ -153,22 +153,29 @@ export default {
             const data = await init.json()
             this.insertInfo = await data;
         },
+        async moveIdol(targetId) {
+            const result = await this.getIdolById(targetId)
+            result != 0 && this.changeUrl(result)
+        },
+        changeUrl(targetId) {
+            const currentUrl = window.location.href
+            history.pushState(
+                {},
+                null,
+                currentUrl.substr(0, currentUrl.lastIndexOf("/") + 1) + targetId
+            )
+        },
         async getIdolById(id) {
             try{
                 const init = await fetch("/api/idol/profile/" + id)
                 const data = await init.json()
                 if(init.status == 200) {
                     this.idol = await data
-                    const currentUrl = window.location.href
-
-                    history.pushState(
-                        {},
-                        null,
-                        currentUrl.substr(0, currentUrl.lastIndexOf("/") + 1) + (this.idol.id)
-                    )
+                    return this.idol.id
                 } else {
                     alert("해당 아이디의 아이돌이 없습니다.")
-                    this.idol.id = 0
+                    this.getIdolById(1)
+                    return 0
                 }
 
                 

@@ -4,12 +4,11 @@
             <ProfilePuchi v-if="idol.id" :idol="idol" :customImage="customImage"/>
             <label for="puchi">푸치 사진 변경</label>
             <input id="file-puchi" type="file" @change="handleFile">
-            <button @click="sendData">전송</button>
             <p>
                 <!-- <router-link :to="'/v/idol/update/' + ((idol.id - 1 != 0) ? idol.id - 1 : 1)">이전 아이돌 </router-link>
                 <router-link :to="'/v/idol/update/' + (idol.id + 1)"> 다음 아이돌</router-link> -->
-                <button @click="getIdolById(idol.id - 1)">이전 아이돌</button>
-                <button @click="getIdolById(idol.id + 1)">다음 아이돌</button>
+                <button v-if="idol.id > 1" @click="moveIdol(idol.id - 1)">이전 아이돌</button>
+                <button @click="moveIdol(idol.id + 1)">다음 아이돌</button>
             </p>
         </div>
 
@@ -149,6 +148,11 @@
                 
 
             </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="2"><button class="btn-send" @click="sendData">전송</button></td>
+                </tr>
+            </tfoot>
         </table>
     </div>
     
@@ -185,24 +189,30 @@ export default {
             const data = await init.json()
             this.insertInfo = await data;
         },
+        async moveIdol(targetId) {
+            const result = await this.getIdolById(targetId)
+            result != 0 && this.changeUrl(result)
+        },
+        changeUrl(targetId) {
+            const currentUrl = window.location.href
+            history.pushState(
+                {},
+                null,
+                currentUrl.substr(0, currentUrl.lastIndexOf("/") + 1) + targetId
+            )
+        },
         async getIdolById(id) {
             try{
                 const init = await fetch("/api/idol/profile/" + id)
                 const data = await init.json()
                 if(init.status == 200) {
                     this.idol = await data
-                    const currentUrl = window.location.href
-
-                    history.pushState(
-                        {},
-                        null,
-                        currentUrl.substr(0, currentUrl.lastIndexOf("/") + 1) + (this.idol.id)
-                    )
+                    return this.idol.id
                 } else {
                     alert("해당 아이디의 아이돌이 없습니다.")
-                    this.idol.id = 0
+                    this.getIdolById(1)
+                    return 0
                 }
-
                 
             } catch(exc) {
                 console.log(exc)
@@ -261,7 +271,11 @@ export default {
             })
 
             const data = await initFetch.json()
-            alert(JSON.stringify(data))
+            if(data.result == "OK") {
+                alert("정보 수정이 완료되었습니다.")
+            } else {
+                alert("오류가 발생했습니다. \n" + JSON.stringify(data))
+            }
         },
         paddingZero(value) {
            return (value.length < 2) ? ("0" + value) : value;
@@ -283,6 +297,10 @@ export default {
         margin: 0px auto;
         padding: 2px;
     }
-
+    .btn-send {
+        font-size: 17px;
+        width: 100%;
+        margin: 10px auto;
+    }
     
 </style>
