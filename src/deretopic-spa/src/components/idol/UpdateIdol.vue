@@ -180,7 +180,6 @@ export default {
         console.log("routed ", this.$route)
         this.getIdolById(this.$route.params.id)
         this.getEnumInfo()
-        this.setBirthdayMonthAndDate()
     },
 
     methods: {
@@ -262,11 +261,15 @@ export default {
                 dataObj.puchiBase64 = ""
             }
 
+            const headers = {
+                'Content-Type': 'application/json'
+            }
+            if(this.$store.state.accessUser != null && this.$store.state.accessUser.token) {
+                headers['Authorization'] = `Bearer ${this.$store.state.accessUser.token}`
+            }
             const initFetch = await fetch(`/api/idol/profile/${this.idol.id}`, {
                 method: "PUT",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: headers,
                 body: JSON.stringify(dataObj)
             })
 
@@ -274,7 +277,11 @@ export default {
             if(data.result == "OK") {
                 alert("정보 수정이 완료되었습니다.")
             } else {
-                alert("오류가 발생했습니다. \n" + JSON.stringify(data))
+                if(data.status == 401) {
+                    alert("접근권한이 없습니다. 로그인하세요.")
+                } else {
+                    alert("오류가 발생했습니다. \n" + JSON.stringify(data))
+                }
             }
         },
         paddingZero(value) {

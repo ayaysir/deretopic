@@ -1,22 +1,19 @@
 package com.example.deretopic.web;
 
-import com.example.deretopic.service.IdolEntityService;
 import com.example.deretopic.service.UwasaEntityService;
 import com.example.deretopic.util.FileIOUtil;
 import com.example.deretopic.util.HashUtil;
-import com.example.deretopic.web.dto.*;
+import com.example.deretopic.web.dto.UwasaEntityDTO;
+import com.example.deretopic.web.dto.UwasaEntitySaveDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.Resource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.URLEncoder;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;

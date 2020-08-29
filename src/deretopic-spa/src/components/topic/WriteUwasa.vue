@@ -150,11 +150,16 @@ export default {
 
             console.log(dataObj)
 
+            const headers = {
+                'Content-Type': 'application/json'
+            }
+            if(this.$store.state.accessUser != null && this.$store.state.accessUser.token) {
+                headers['Authorization'] = `Bearer ${this.$store.state.accessUser.token}`
+            }
+
             const initFetch = await fetch("/api/idol/uwasa", {
                 method: "POST",
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers,
                 body: JSON.stringify(dataObj)
             })
 

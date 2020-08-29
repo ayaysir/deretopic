@@ -7,6 +7,7 @@ import IdolList from "@/components/idol/IdolList.vue"
 import WriteUwasa from "@/components/topic/WriteUwasa.vue" 
 import UpdateIdol from "@/components/idol/UpdateIdol.vue" 
 import ViewIdol from "@/components/idol/ViewIdol.vue"
+import LoginRedirectHandler from "@/components/auth/LoginRedirectHandler"
 
 Vue.use(Router)
 
@@ -47,6 +48,11 @@ export default new Router({
             path: "/v/idol/view/:id",
             name: "View Idol",
             component: ViewIdol
+        },
+        {
+            path: "/v/auth-redirect",
+            name: "Login Redirection Handler",
+            component: LoginRedirectHandler
         },
 
     ]

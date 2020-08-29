@@ -7,15 +7,27 @@
         <ul>
             <li><router-link to="/">소문 목록</router-link></li>
             <li><router-link to="/v/simple-list">아이돌 리스트</router-link></li>
-            <li><router-link to="/v/write-uwasa">소문 등록</router-link></li>
+            <li v-if="getLoggedIn"><router-link to="/v/write-uwasa">소문 등록</router-link></li>
         </ul>
+        <LoginPanel :accessToken="accessToken" />
     </nav>
 </template>
 
 <script>
+import LoginPanel from "@/components/auth/LoginPanel.vue"
+
 export default {
   name: 'Header',
-  props: ["msg", "logoSrc"]
+  props: ["msg", "logoSrc", "accessToken"],
+  components: {
+    LoginPanel
+  },
+  computed: {
+    getLoggedIn() {
+      return this.$store.state.accessUser &&  this.$store.state.accessUser.token != ""
+    }
+  }
+  
 }
 </script>
 

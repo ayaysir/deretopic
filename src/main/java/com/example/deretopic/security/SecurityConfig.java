@@ -8,6 +8,7 @@ import com.example.deretopic.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -127,11 +128,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll()
                     .antMatchers("/", "/css/**", "/img/**", "/js/**",
                         "/h2/**", "/h2-console/**", "/favicon.ico",
-                        "/index.html", "/api/**", "/profile", "/v/**").permitAll()
+                        "/index.html", "/profile", "/v/**").permitAll()
                     .antMatchers("/auth/**", "/oauth2/**")
                     .permitAll()
+
+                    // idol api 중 허용 가능한 것들만
+                    .antMatchers(HttpMethod.GET, "/api/idol/**").permitAll()
+                    .antMatchers(HttpMethod.GET, "/api/test").permitAll()
+                    .antMatchers(HttpMethod.GET, "/api/test/**").permitAll()
+
                     .anyRequest()
                     .authenticated()
+
                 .and()
                     .oauth2Login()
                     .authorizationEndpoint()

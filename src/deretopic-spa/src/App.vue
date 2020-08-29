@@ -1,7 +1,8 @@
 <template>
     <div id="app">
-        <Header :msg="welcomeMessage"></Header>
-        <router-view :msg="welcomeMessage" :key="$route.fullPath"/>
+
+        <Header :msg="welcomeMessage" :accessToken="accessToken"></Header>
+        <router-view :msg="welcomeMessage" :key="$route.fullPath" :accessToken="accessToken"/>
         <!-- <Topic /> -->
     </div>
 </template>
@@ -14,7 +15,8 @@
         data() {
             return {
                 welcomeMessage: "default msg",
-                topicDataFromSuper: []
+                topicDataFromSuper: [],
+                accessToken: localStorage.getItem("accessToken")
             }
         },
         components: {
@@ -35,7 +37,7 @@
                 // 제목 설정
                 document.title = text
             })
-        }
+        },
         
         
     }
