@@ -33,7 +33,7 @@ export default {
         const isHttp = url.indexOf("http://") != -1
         const coreUrl = url.replace(/http:\/\/|https:\/\//, "").split("/")[0]
         const finalUrl = (isHttp ? "http://" : "https://") + coreUrl
-        return finalUrl + "oauth2/authorize/google?redirect_uri=" + finalUrl + "/v/auth-redirect"
+        return finalUrl + "/oauth2/authorize/google?redirect_uri=" + finalUrl + "/v/auth-redirect"
       }
   },
   methods: {
