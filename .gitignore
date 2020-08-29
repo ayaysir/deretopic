@@ -70,6 +70,7 @@ pnpm-debug.log*
 
 data.sql
 application-real-papago.properties
+application-oauth.properties
 
 
 # End of https://www.toptal.com/developers/gitignore/api/vuejs
