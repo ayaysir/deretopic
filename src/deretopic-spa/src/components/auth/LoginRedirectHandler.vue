@@ -14,7 +14,6 @@ export default {
         if(token) {
             localStorage.setItem("accessToken", token)
             this.$store.dispatch("LOGIN", token).then(() => {})
-            this.$router.push("")
         } else if(error) {
             alert(error)
         }
