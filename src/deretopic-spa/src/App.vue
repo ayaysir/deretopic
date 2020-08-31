@@ -37,6 +37,12 @@
                 // 제목 설정
                 document.title = text
             })
+
+            // localStorage에서 accessToken 가져옴
+            const token = localStorage.getItem("accessToken")
+            if(token && token != "") {
+                this.$store.dispatch("LOGIN", token).then(() => {})
+            }
         },
         
         
@@ -75,6 +81,18 @@
 
     table {
         margin: 0px auto;
+    }
+
+    a, a:visited {
+        color: cornflowerblue;
+        text-decoration: none;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+
+    a.danger, a.danger:visited {
+        color: lightcoral;
     }
 
 </style>

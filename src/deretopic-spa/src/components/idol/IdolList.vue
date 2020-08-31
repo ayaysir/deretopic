@@ -12,7 +12,7 @@
                     <td>{{idol.name}}</td>
                     <td>{{idol.nameKo}}</td>
                     <td><router-link :to="'/v/idol/view/' + idol.id">[보기]</router-link></td>
-                    <td><router-link :to="'/v/idol/update/' + idol.id" v-if="getLoggedIn">[편집]</router-link></td>
+                    <td><router-link :to="'/v/idol/update/' + idol.id" v-if="getLoggedIn" class="danger">[편집]</router-link></td>
                 </tr>
             </tbody>
         </table>
@@ -40,7 +40,7 @@ export default {
     },
     computed: {
         getLoggedIn() {
-            return this.$store.state.accessUser && this.$store.state.token != ""
+            return this.$store.state.accessUser && this.$store.state.accessUser.token != ""
         }
     },
     methods: {

@@ -1,11 +1,11 @@
 <template>
-    <div>
+    <div class="wrapper">
         <div v-show="!isLoggedIn">
-            <a :href="getRedirectUrl">로그인</a>
+            <a :href="getRedirectUrl"><img src="@/assets/btn_google_signin_light_normal_web.png"></a>
         </div>
-        <div v-show="isLoggedIn">
-            <img v-if="getUserData" :src="getUserData.imageUrl" class="profile-img">
-            <span v-if="getUserData">{{getUserData.name}}</span> <span>님, 로그인되었습니다.</span> <button @click="logout">로그아웃</button>
+        <div v-show="isLoggedIn" class="profile-wrapper">
+          <p><img v-if="getUserData" :src="getUserData.imageUrl" class="profile-img">
+            <span v-if="getUserData">{{getUserData.name}}</span> <span>님, 로그인되었습니다.</span> <button @click="logout">로그아웃</button></p>
         </div>
     </div>
 
@@ -51,9 +51,27 @@ export default {
 </script>
 
 <style scoped>
-    .profile-img {
-        border-radius: 100%;
-        width: 20px;
-        margin: 2px;
-    }
+  .wrapper {
+    margin: 0px auto;
+
+  }
+  .profile-wrapper{
+    height: 50px;
+    vertical-align: middle;
+  }
+  .profile-wrapper p {
+    margin: 0px;
+    padding: 0px;
+  }
+  .profile-wrapper span {
+    line-height: 50px;
+    vertical-align: middle;
+  }
+  .profile-img {
+    border-radius: 100%;
+    height: 30px;
+    margin: 0px 5px;
+    position: relative;
+    top: 10px;
+  }
 </style>

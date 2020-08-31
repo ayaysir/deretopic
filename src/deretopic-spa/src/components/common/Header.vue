@@ -1,13 +1,15 @@
 <template>
     <nav class="nav">
         <div class="nav-header">
-            <img src="@/assets/logo.png"> <h2>{{msg}}</h2>
+            <img src="@/assets/logo.png"> <h2><router-link to="/">{{msg}}</router-link></h2>
         </div>
         
-        <ul>
+        <ul class="nav-body">
             <li><router-link to="/">소문 목록</router-link></li>
             <li><router-link to="/v/simple-list">아이돌 리스트</router-link></li>
             <li v-if="getLoggedIn"><router-link to="/v/write-uwasa">소문 등록</router-link></li>
+            <li><router-link to="/v/thread/qna">잡답/질문게시판</router-link></li>
+            <li><a href="https://github.com/ayaysir/deretopic" target="_blank">About</a></li>
         </ul>
         <LoginPanel :accessToken="accessToken" />
     </nav>
@@ -65,21 +67,30 @@ export default {
   border-bottom: 1px solid #888;
 }
  
-.nav a {
+.nav-body a {
   text-decoration: none;
   color: #fff;
   display: block;
   transition: .3s background-color;
 }
  
-.nav a:hover {
+.nav-body a:hover {
   background-color: #005f5f;
 }
  
-.nav a.active {
+.nav-body a.active {
   background-color: #fff;
   color: #444;
   cursor: default;
+}
+
+.nav-header a, .nav-header a:visited {
+  color: black;
+  text-decoration: none;
+}
+
+.nav-header a:hover {
+  text-decoration: underline;
 }
  
 @media screen and (min-width: 600px) {

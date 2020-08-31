@@ -34,7 +34,6 @@ public class UwasaEntityDTO {
         this.comment = uwasaEntity.getComment();
         this.ttsFileName = uwasaEntity.getTtsFileName();
         this.idol = uwasaEntity.getIdol();
-        this.modifiedDate = uwasaEntity.getModifiedDate();
 
     }
 }

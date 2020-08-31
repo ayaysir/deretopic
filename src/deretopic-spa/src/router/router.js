@@ -8,6 +8,7 @@ import WriteUwasa from "@/components/topic/WriteUwasa.vue"
 import UpdateIdol from "@/components/idol/UpdateIdol.vue" 
 import ViewIdol from "@/components/idol/ViewIdol.vue"
 import LoginRedirectHandler from "@/components/auth/LoginRedirectHandler"
+import ThreadList from "@/components/thread/ThreadList.vue"
 
 Vue.use(Router)
 
@@ -53,6 +54,11 @@ export default new Router({
             path: "/v/auth-redirect",
             name: "Login Redirection Handler",
             component: LoginRedirectHandler
+        },
+        {
+            path: "/v/thread/:threadName",
+            name: "View Thread List",
+            component: ThreadList
         },
 
     ]
