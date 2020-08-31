@@ -1,7 +1,7 @@
 <template>
     <div class="wrapper">
         <div v-show="!isLoggedIn">
-            <a :href="getRedirectUrl"><img src="@/assets/btn_google_signin_light_normal_web.png"></a>
+            <a :href="getRedirectUrl"><img class="img-google" src="@/assets/btn_google_signin_dark_normal_web.png"></a>
         </div>
         <div v-show="isLoggedIn" class="profile-wrapper">
           <p><img v-if="getUserData" :src="getUserData.imageUrl" class="profile-img">
@@ -73,5 +73,9 @@ export default {
     margin: 0px 5px;
     position: relative;
     top: 10px;
+  }
+  .img-google {
+    height: 50px;
+    margin-top: 10px;
   }
 </style>

@@ -7,7 +7,7 @@
         </div>
         <div v-if="threadList.length != 0">
 
-            <div class="each-thread-wrapper" v-for="thread in threadList" :key="thread.id">
+            <div class="each-thread-wrapper" v-for="thread in lineCarriagedThreadList" :key="thread.id">
                <!--
                    { "id": 1, "threadName": "qna", "category": "e", "content": "ee", "authorId": null, 
 
@@ -31,7 +31,7 @@
                        </tbody>
                    </table>
                    <hr>
-                   <div class="content">{{thread.content}}</div>
+                   <div class="content" v-html="thread.content"></div>
             </div>
         </div>
         <infinite-loading :identifier="infiniteId" @infinite="infiniteHandler" spinner="waveDots" />
@@ -59,6 +59,14 @@ export default {
     computed: {
         getLoggedIn() {
             return this.isLoggedIn()
+        },
+        lineCarriagedThreadList() {
+            const data = this.threadList
+            return data.map(v => {
+                v.content = v.content.replace(/(?:\\r\\n|\\r|\\n|\r\n|\r|\n)/g, "<br>")
+                
+                return v
+            })
         }
     },
     methods: {
