@@ -23,7 +23,7 @@
                                <td><span>{{'No.' + thread.id}}</span></td>
                                <td><img :src="thread.author.imageUrl || ''" class="profile-img"> </td>
                                <td> <span>{{thread.author.name}}</span> </td>
-                               <td v-if="thread.author.modifiedDate"> <span>{{ thread.author.modifiedDate.split('T')[0] + ' ' + thread.author.modifiedDate.split('T')[1].split('.')[0]}}</span> </td>
+                               <td v-if="thread.modifiedDate"> <span>{{ thread.modifiedDate.split('T')[0] + ' ' + thread.modifiedDate.split('T')[1].split('.')[0]}}</span> </td>
                                <td v-if="getLoggedIn && isCorrectWriter(thread.author.id)">
                                    <span style="cursor: pointer; color: lightcoral;" @click="deleteThread(thread.id)">[삭제]</span>
                                </td>

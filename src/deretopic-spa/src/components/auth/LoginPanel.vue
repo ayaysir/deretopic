@@ -75,7 +75,7 @@ export default {
     top: 10px;
   }
   .img-google {
-    height: 50px;
+    height: 40px;
     margin-top: 10px;
   }
 </style>
