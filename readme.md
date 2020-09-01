@@ -18,6 +18,7 @@ http://dere.yoonbumtae.com
 ## 구현 공통 사항
 - AWS + Travis-CI를 이용하여 무중단 자동 배포가 되도록 구성하였으며 외부 인터넷에서 접근 가능
 - 백엔드 구현에 Spring Boot 및 JPA, Security 사용
+- 단위 테스트 적용 (JUnit)
 - 프론트엔드 구현에 Vue.js + Vue Router + Vuex 사용
 - SPA에서 작동하는 소셜 로그인(OAuth2) 구현
 - Restful API를 이용한 CRUD 구현
@@ -44,6 +45,3 @@ http://dere.yoonbumtae.com
 - 글 보기 기능: 비회원도 가능
 - 글 작성 기능: 구글 소셜 로그인을 통해 회원가입한 자만 가능
 - 삭제 기능: 삭제는본인 게시글만 가능
-팀구성 ― 개인
-http://dere.yoonbumtae.com
-https://github.com/ayaysir/deretopic
