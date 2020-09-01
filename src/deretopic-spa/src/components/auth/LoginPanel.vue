@@ -56,7 +56,6 @@ export default {
 
   }
   .profile-wrapper{
-    height: 50px;
     vertical-align: middle;
   }
   .profile-wrapper p {
@@ -64,7 +63,6 @@ export default {
     padding: 0px;
   }
   .profile-wrapper span {
-    line-height: 50px;
     vertical-align: middle;
   }
   .profile-img {
