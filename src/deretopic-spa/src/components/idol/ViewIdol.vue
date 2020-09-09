@@ -143,7 +143,7 @@ export default {
             const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
 
             // pick a different colour
-            return luma < 40 ? "black" : "white"
+            return luma < 127.5 ? "white" : "black"
         }
     },
 
