@@ -1,10 +1,8 @@
 <template>
     <div class="thread-wrapper">
-        <div class="write-area" v-if="getLoggedIn">
-            <label><strong>글쓰기</strong>  </label>
-            <textarea rows="5" v-model="writtenContent"></textarea>
-            <button @click="sendOneThread">등록</button>
-        </div>
+        
+        <WriteArea :threadName="this.$route.params.threadName" @refreshThread="refresh"/>
+
         <div v-if="threadList.length != 0">
 
             <div class="each-thread-wrapper" v-for="thread in lineCarriagedThreadList" :key="thread.id">
@@ -41,17 +39,19 @@
 <script>
 import InfiniteLoading from 'vue-infinite-loading'
 
+import WriteArea from './WriteArea.vue'
+
 export default {
     data() {
         return {
             threadList: [],
             requestCount: 0,
-            writtenContent: "",
             infiniteId: +new Date()
         }
     },
     components: {
-        InfiniteLoading
+        InfiniteLoading,
+        WriteArea
     },
     created() {
         
@@ -81,43 +81,13 @@ export default {
             const data = await init.json()
             return data
         },
-        async sendOneThread() {
-            if(!this.isLoggedIn) {
-                alert("회원만 작성할 수 있습니다.")
-                return false
-            }
 
-            const dataObj = {
-                "authorId": this.$store.state.accessUser.data.id,
-                "category": "",
-                "content": this.writtenContent,
-                "threadName": this.$route.params.threadName
-            }
-
-            const headers = {
-                'Content-Type': 'application/json',
-                "Authorization": `Bearer ${this.$store.state.accessUser.token}`
-            }
-
-            const initFetch = await fetch("/api/thread", {
-                method: "POST",
-                headers,
-                body: JSON.stringify(dataObj)
-            })
-
-            const result = await initFetch.json()
-            if(result.status == 201) {
-                alert("글이 정상적으로 등록되었습니다.");
-            } else {
-                alert("오류가 발생했습니다.\n" + JSON.stringify(result))
-            }
-
+        refresh() {
             this.threadList = []
             this.requestCount = 0
             this.infiniteId += 1
-            this.writtenContent = ""
-
         },
+        
 
         async deleteThread(threadId) {
             if(!this.isLoggedIn) {
@@ -182,25 +152,15 @@ export default {
         
     }
 
-
-    .write-area textarea {
-
-        border: 1px solid lightsalmon;
-        border-radius: 5px;
-        width: 100%;
-        margin-top: 10px;
-    }
-
     .profile-img {
         width: 20px;
     }
 
-    .each-thread-wrapper, .write-area {
+    .each-thread-wrapper {
         border: 1px solid lightgray;
         padding: 10px;
         border-radius: 10px;
         margin: 10px 0 auto;
-
         text-align: left;
     }
 
@@ -220,11 +180,6 @@ export default {
 
     .each-thread-wrapper hr {
         color: lightgray
-    }
-
-
-    .write-area {
-        margin-bottom: 20px;
     }
 
 </style>
