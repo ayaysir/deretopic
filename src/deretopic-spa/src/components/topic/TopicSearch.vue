@@ -2,11 +2,12 @@
     <div class="search-box">
         <div class="form-group order">
             <label>전체 정렬</label>
-            <select v-model="allOrderStatus" @change="allOrder">
+            <!-- <select v-model="allOrderStatus" @change="allOrder">
                 <option disabled value="no">-- 전체 목록 정렬 --</option>
                 <option selected value="asc">오름차순</option>
                 <option value="desc">내림차순</option>
-            </select>
+            </select> -->
+            <button @click="allOrder">{{isOrderAsc == true ? '오름차순 ▲' : '내림차순 ▼'}}</button>
         </div>
         <div class="form-group search">
             <label>소문 검색</label>
@@ -28,7 +29,7 @@ export default {
         return {
             searchCategory: "내용",
             searchKeyword: "",
-            allOrderStatus: "asc"
+            isOrderAsc: true
 
         }
     },
@@ -41,7 +42,8 @@ export default {
             this.$emit("search", this.searchCategory, "")
         },
         allOrder() {
-            this.$emit("allOrder", this.allOrderStatus)
+            this.isOrderAsc = !this.isOrderAsc
+            this.$emit("allOrder", this.isOrderAsc == true ? 'asc' : 'desc')
         }
     }
 }

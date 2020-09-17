@@ -74,9 +74,16 @@ public class IdolApiController {
         System.out.println(dto);
         System.out.println(dto.getPuchiBase64().equals(""));
 
+        // 푸치 이미지
         if(!dto.getPuchiBase64().equals("")) {
             String relPath = "resources/profile_puchi_normal";
             FileIOUtil.writeFileToResourceFromBASE64Bytes(relPath, id + ".png", dto.getPuchiBase64().getBytes());
+        }
+
+        // 아이콘 이미지
+        if(!dto.getIconBase64().equals("")) {
+            String relPath = "resources/profile_icon_normal";
+            FileIOUtil.writeFileToResourceFromBASE64Bytes(relPath, id + ".jpg", dto.getIconBase64().getBytes());
         }
 
         Long resultId = idolEntityService.update(dto);
@@ -96,6 +103,12 @@ public class IdolApiController {
     public ResponseEntity<Resource> getPuchi(@PathVariable Long id, HttpServletRequest request) throws Exception {
         return FileIOUtil.flushFileFromResources("resources/profile_puchi_normal",
                 id + ".png", request);
+    }
+
+    @GetMapping("/api/idol/icon/{id}")
+    public ResponseEntity<Resource> getIcon(@PathVariable Long id, HttpServletRequest request) throws Exception {
+        return FileIOUtil.flushFileFromResources("resources/profile_icon_normal",
+                id + ".jpg", request);
     }
 
     @GetMapping("/api/idol/insert-info")

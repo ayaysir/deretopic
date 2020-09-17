@@ -45,6 +45,7 @@ public class IdolRequestDTO {
 
     // DTO 전용
     private String puchiBase64;
+    private String iconBase64;
 
     // 2020-08-28
     private String nameFurigana;
@@ -86,9 +87,10 @@ public class IdolRequestDTO {
                           Integer age, LocalDate birthday, String birthPlace,
                           BloodType bloodType, Integer height, Integer weight,
                           ThreeSize threeSize, Constellation constellation,
-                          String hobby, IdolType idolType, String note,
-                          String refKeyword, String puchiBase64, String nameFurigana,
-                          String imageColor, String voiceActorKo, Handedness handedness) {
+                          String hobby, IdolType idolType, String note, String refKeyword,
+                          String puchiBase64, String iconBase64,
+                          String nameFurigana, String imageColor,
+                          String voiceActorKo, Handedness handedness) {
         this.id = id;
         this.name = name;
         this.nameEn = nameEn;
@@ -106,6 +108,7 @@ public class IdolRequestDTO {
         this.note = note;
         this.refKeyword = refKeyword;
         this.puchiBase64 = puchiBase64;
+        this.iconBase64 = iconBase64;
         this.nameFurigana = nameFurigana;
         this.imageColor = imageColor;
         this.voiceActorKo = voiceActorKo;

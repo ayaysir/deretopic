@@ -8,7 +8,7 @@
             </thead>
             <tbody>
                 <tr v-for="idol in idols" :key="idol.name">
-                    <td>{{idol.id}}</td>
+                    <td><ProfileIcon :idol="idol" /></td>
                     <td>{{idol.name}}</td>
                     <td>{{idol.nameKo}}</td>
                     <td><router-link :to="'/v/idol/view/' + idol.id">[보기]</router-link></td>
@@ -23,7 +23,9 @@
 </template>
 
 <script>
-import InfiniteLoading from 'vue-infinite-loading';
+import InfiniteLoading from 'vue-infinite-loading'
+
+import ProfileIcon from "@/components/common/ProfileIcon.vue"
 
 export default {
     data() {
@@ -36,7 +38,8 @@ export default {
         // this.getIdol()
     },
     components: {
-        InfiniteLoading
+        InfiniteLoading,
+        ProfileIcon
     },
     computed: {
         getLoggedIn() {

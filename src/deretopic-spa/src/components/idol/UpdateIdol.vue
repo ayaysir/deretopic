@@ -1,12 +1,15 @@
 <template>
     <div>
         <div class="form-group form-puchi">
-            <ProfilePuchi v-if="idol.id" :idol="idol" :customImage="customImage"/>
-            <label for="puchi">푸치 사진 변경</label>
-            <input id="file-puchi" type="file" @change="handleFile">
+            <ProfilePuchi v-if="idol.id" :idol="idol" :customImage="customPuchi" />
+            <label for="file-puchi">푸치 사진 변경</label>
+            <input id="file-puchi" type="file" @change="handlePuchi">
+            <hr>
+            <ProfileIcon v-if="idol.id" :idol="idol" :customImage="customIcon" />
+            <label for="file-icon">아이콘 변경</label>
+            <input id="file-icon" type="file" @change="handleIcon">
+            <hr>
             <p>
-                <!-- <router-link :to="'/v/idol/update/' + ((idol.id - 1 != 0) ? idol.id - 1 : 1)">이전 아이돌 </router-link>
-                <router-link :to="'/v/idol/update/' + (idol.id + 1)"> 다음 아이돌</router-link> -->
                 <button v-if="idol.id > 1" @click="moveIdol(idol.id - 1)">이전 아이돌</button>
                 <button @click="moveIdol(idol.id + 1)">다음 아이돌</button>
             </p>
@@ -159,13 +162,17 @@
 </template>
 
 <script>
-import ProfilePuchi from "@/components/common/ProfilePuchi.vue";
+import ProfilePuchi from "@/components/common/ProfilePuchi.vue"
+import ProfileIcon from "@/components/common/ProfileIcon.vue"
+
 export default {
     data() {
         return {
             idol: {},
             puchiBase64: null,
-            customImage: null,
+            iconBase64: null,
+            customPuchi: null,
+            customIcon: null,
             insertInfo: null,
             tempDate: {
                 m: 0,
@@ -174,7 +181,8 @@ export default {
         }
     },
     components: {
-        ProfilePuchi
+        ProfilePuchi,
+        ProfileIcon
     },
     created() {
         console.log("routed ", this.$route)
@@ -219,16 +227,20 @@ export default {
             
         },
 
-        handleFile(e) {
+        handlePuchi(e) {
+            
+            const fileType = "image/png"
+            
             const files = e.target.files
 
             if(files.length > 0) {
                 const file = e.target.files[0]
-                this.customImage = file
+                this.customPuchi = file
 
-                if(file.type != "image/png" || file.size > 300000) {
-                    alert("파일이 png가 아니거나 사이즈가 너무 큽니다.")
+                if(file.type != fileType || file.size > 300000) {
+                    alert(`파일이 png가 아니거나 사이즈가 너무 큽니다.`)
                     e.target.value = ""
+                    this.customPuchi = ""
                     return false
                 }
 
@@ -249,17 +261,48 @@ export default {
             }
         }, 
 
+        handleIcon(e) {
+            
+            const fileType = "image/jpeg"
+            
+            const files = e.target.files
+
+            if(files.length > 0) {
+                const file = e.target.files[0]
+                this.customIcon = file
+
+                if(file.type != fileType || file.size > 300000) {
+                    alert(`파일이 png가 아니거나 사이즈가 너무 큽니다.`)
+                    e.target.value = ""
+                    this.customIcon = ""
+                    return false
+                }
+
+                const reader = new FileReader()
+
+                reader.addEventListener("load", () => {
+                    const dataIndex = reader.result.indexOf(',') + 1
+                    const base64 = reader.result.substring(
+                                    dataIndex,
+                                    reader.result.length
+                    )
+
+                    console.log(base64.length)
+                    this.iconBase64 = base64
+                }, false)
+                reader.readAsDataURL(file)
+
+            }
+        }, 
+
         async sendData() {
             // private String idolNameJa, uwasaJa, uwasaKo;
             // private String ttsAudioBase64, tempHash;
             // private Integer topicNum;
 
             const dataObj = this.idol
-            if(this.puchiBase64) {
-                dataObj.puchiBase64 = this.puchiBase64
-            } else {
-                dataObj.puchiBase64 = ""
-            }
+            dataObj.puchiBase64 = this.puchiBase64 || ""
+            dataObj.iconBase64 = this.iconBase64 || ""
 
             const headers = {
                 'Content-Type': 'application/json'
