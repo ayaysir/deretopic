@@ -1,7 +1,7 @@
 <template>
   <div class="topic">
         <audio id="tts-audio-main"></audio>
-        <TopicSearch v-on:search="doSearch" v-on:allOrder="doAllOrder"/>
+        <TopicSearch v-on:search="doSearch" v-on:allOrder="doAllOrder" v-on:shuffle="doShuffle"/>
         <div class="each-row" v-for="(uwasa, rowIndex) in lineCarriagedTopicData" v-bind:key="rowIndex">
           <ProfilePuchi :idol="uwasa.idol"/>
           <div class="topic-num"><span>{{uwasa.topicNum}}</span></div>
@@ -137,8 +137,10 @@ export default {
       }
 
     },
+    doShuffle() {
+      this.topicData.sort(() => Math.random() - 0.5)
+    },
     doAllOrder(order) {
-
       this.resetSearch(order == "desc" ? true : order == "asc" ? false : false)
 
     },

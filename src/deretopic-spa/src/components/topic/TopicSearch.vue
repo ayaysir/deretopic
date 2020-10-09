@@ -8,6 +8,7 @@
                 <option value="desc">내림차순</option>
             </select> -->
             <button @click="allOrder">{{isOrderAsc == true ? '오름차순 ▲' : '내림차순 ▼'}}</button>
+            <button @click="shuffleOrder">순서 섞기</button>
         </div>
         <div class="form-group search">
             <label>소문 검색</label>
@@ -44,6 +45,9 @@ export default {
         allOrder() {
             this.isOrderAsc = !this.isOrderAsc
             this.$emit("allOrder", this.isOrderAsc == true ? 'asc' : 'desc')
+        },
+        shuffleOrder() {
+            this.$emit("shuffle")
         }
     }
 }
