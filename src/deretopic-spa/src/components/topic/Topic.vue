@@ -137,12 +137,15 @@ export default {
       }
 
     },
-    doShuffle() {
-      this.topicData.sort(() => Math.random() - 0.5)
-    },
     doAllOrder(order) {
       this.resetSearch(order == "desc" ? true : order == "asc" ? false : false)
-
+    },
+    doShuffle() {
+      this.limit = 0
+      this.fetchUrl = `/api/idol/uwasa/pages/{limit}?shuffle=true`
+      this.topicData = []
+      this.infiniteId += 1
+      this.searchKeyword = ""
     },
     infiniteHandler($state) {
       const EACH_LEN = 30

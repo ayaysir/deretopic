@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -97,6 +98,13 @@ public class UwasaEntityService {
     @Transactional(readOnly = true)
     public List<UwasaEntityDTO> findByPageRequestReverse(PageRequest pageRequest) {
         return uwasaEntityRepository.findAllByOrderByIdDesc(pageRequest).stream()
+                .map(UwasaEntityDTO::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<UwasaEntityDTO> findByPageRequestShuffle(PageRequest pageRequest) {
+        return uwasaEntityRepository.findAllByShuffle(pageRequest).stream()
                 .map(UwasaEntityDTO::new)
                 .collect(Collectors.toList());
     }

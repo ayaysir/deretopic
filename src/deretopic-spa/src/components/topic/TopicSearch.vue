@@ -2,11 +2,6 @@
     <div class="search-box">
         <div class="form-group order">
             <label>전체 정렬</label>
-            <!-- <select v-model="allOrderStatus" @change="allOrder">
-                <option disabled value="no">-- 전체 목록 정렬 --</option>
-                <option selected value="asc">오름차순</option>
-                <option value="desc">내림차순</option>
-            </select> -->
             <button @click="allOrder">{{isOrderAsc == true ? '오름차순 ▲' : '내림차순 ▼'}}</button>
             <button @click="shuffleOrder">순서 섞기</button>
         </div>

@@ -24,4 +24,8 @@ public interface UwasaEntityRepository extends JpaRepository<UwasaEntity, Long> 
 
     // 전체 목록 내림차순
     List<UwasaEntity> findAllByOrderByIdDesc(Pageable pageable);
+
+    // shuffle
+    @Query("SELECT u from UwasaEntity u ORDER BY random()")
+    List<UwasaEntity> findAllByShuffle(Pageable pageable);
 }

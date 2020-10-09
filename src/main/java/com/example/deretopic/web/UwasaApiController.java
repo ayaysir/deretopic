@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,19 +37,20 @@ public class UwasaApiController {
 
     @GetMapping("/api/idol/uwasa/pages/{pageNum}")
     public List<UwasaEntityDTO> getUwasaByPageRequest(@PathVariable Integer pageNum,
-                                                      @RequestParam(value = "uwasaKeyword", required = false)
-                                                              String uwasaKeyword,
-                                                      @RequestParam(value = "idolKeyword", required = false)
-                                                                  String idolKeyword,
-                                                      @RequestParam(value = "reverseAll", required = false) boolean reverseAll) {
+                                                      @RequestParam(value = "uwasaKeyword", required = false) String uwasaKeyword,
+                                                      @RequestParam(value = "idolKeyword", required = false) String idolKeyword,
+                                                      @RequestParam(value = "reverseAll", required = false) boolean reverseAll,
+                                                      @RequestParam(value = "shuffle", required = false) boolean shuffle) {
         PageRequest pageRequest = PageRequest.of(pageNum, 30);
 
         if(uwasaKeyword != null) {
             return uwasaEntityService.findUwasaByKeyword(uwasaKeyword, pageRequest);
         } else if(idolKeyword != null) {
             return uwasaEntityService.findByIdolKeyword(idolKeyword, pageRequest);
-        } else if(reverseAll){
+        } else if(reverseAll) {
             return uwasaEntityService.findByPageRequestReverse(pageRequest);
+        } else if(shuffle) {
+            return uwasaEntityService.findByPageRequestShuffle(pageRequest);
         } else {
             return uwasaEntityService.findByPageRequest(pageRequest);
         }
