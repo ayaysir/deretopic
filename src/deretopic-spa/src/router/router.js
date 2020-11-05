@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Meta from 'vue-meta'
 
 import Topic from "@/components/topic/Topic.vue"
 import HelloWorld from "@/components/HelloWorld.vue"
@@ -11,6 +12,7 @@ import LoginRedirectHandler from "@/components/auth/LoginRedirectHandler"
 import ThreadList from "@/components/thread/ThreadList.vue"
 
 Vue.use(Router)
+Vue.use(Meta)
 
 export default new Router({
     mode: 'history',
@@ -18,7 +20,8 @@ export default new Router({
         {
             path: "/",
             name: "Topic",
-            component: Topic
+            component: Topic,
+            alias: ["/v/search"]
         },
         {
             path: "/foo",

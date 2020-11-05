@@ -41,10 +41,17 @@ export default {
       }
   },
   created() {
-      
-      
   },
   mounted() {
+    // 2020-11-05 17:48:15 url 쿼리가 있다면 검색 기능 수행
+    console.log(this.$route.query.uwasaKeyword, this.$route.query.idolKeyword)
+    const uwasaKeyword = this.$route.query.uwasaKeyword
+    const idolKeyword = this.$route.query.idolKeyword
+    if(this.$route.query.uwasaKeyword) {
+      this.doSearch("내용", uwasaKeyword)
+    } else if(this.$route.query.idolKeyword) {
+      this.doSearch("이름", idolKeyword)
+    }
   },
   components: {
     InfiniteLoading,
@@ -73,6 +80,9 @@ export default {
   },
 
   methods: {
+    showAlert() {
+      alert("코드수 늘리기")
+    },
     async getTopicFromApi(fetchUrl) {
       try {
           const init = await fetch(fetchUrl, {method: "GET"})
@@ -119,6 +129,9 @@ export default {
       this.topicData = []
       this.infiniteId += 1
       this.searchKeyword = ""
+
+      // 2020-11-05 17:43:19 change url
+      history.pushState(null, "", `/`)
     },
     doSearch(category, keyword) {
       console.log(category, keyword)
@@ -134,6 +147,9 @@ export default {
         this.fetchUrl = `/api/idol/uwasa/pages/{limit}?${target}=${keyword}`
         this.infiniteId += 1
         
+        // 2020-11-05 17:43:19 change url
+        history.pushState(null, "", `/v/search?${target}=${keyword}`)
+
       }
 
     },
