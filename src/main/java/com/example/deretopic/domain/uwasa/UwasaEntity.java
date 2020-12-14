@@ -28,7 +28,7 @@ public class UwasaEntity extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT")
     private String uwasaKo;
 
-    // 주석
+    // 주석.
     @Column(columnDefinition = "TEXT")
     private String comment;
 
