@@ -11,8 +11,15 @@
             <li><router-link to="/v/thread/qna">잡답/질문게시판</router-link></li>
             <li><a href="https://github.com/ayaysir/deretopic" target="_blank">About</a></li>
         </ul>
+
+        <div class="notification">
+          이 사이트는 운영을 중단하며 2020년 12월 14일 이후 다음으로 이동되었습니다. 
+          <br><a href="http://yoonbumtae.com/dere">http://yoonbumtae.com/dere</a>
+          <br>앞으로 올라오는 최신 소문들은 위 링크에서 업데이트됩니다.
+        </div>
         <LoginPanel :accessToken="accessToken" />
     </nav>
+
 </template>
 
 <script>
@@ -91,6 +98,17 @@ export default {
 
 .nav-header a:hover {
   text-decoration: underline;
+}
+
+.notification {
+  padding: 10px 10px;
+  background-color: crimson; 
+  color: white;
+}
+
+.notification a{
+  color:cornsilk;
+  font-weight: bold;
 }
  
 @media screen and (min-width: 600px) {
