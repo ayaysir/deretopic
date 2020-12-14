@@ -13,9 +13,9 @@
         </ul>
 
         <div class="notification">
-          이 사이트는 운영을 중단하며 2020년 12월 14일 이후 다음으로 이동되었습니다. 
+          2020년 12월 14일 이후 올라오는 소문들은. 
           <br><a href="http://yoonbumtae.com/dere">http://yoonbumtae.com/dere</a>
-          <br>앞으로 올라오는 최신 소문들은 위 링크에서 업데이트됩니다.
+          <br>위의 링크에서 업데이트됩니다.
         </div>
         <LoginPanel :accessToken="accessToken" />
     </nav>
