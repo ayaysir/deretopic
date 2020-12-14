@@ -13,7 +13,7 @@
         </ul>
 
         <div class="notification">
-          2020년 12월 14일 이후 올라오는 소문들은. 
+          2020년 12월 14일 이후 올라오는 소문들은
           <br><a href="http://yoonbumtae.com/dere">http://yoonbumtae.com/dere</a>
           <br>위의 링크에서 업데이트됩니다.
         </div>
