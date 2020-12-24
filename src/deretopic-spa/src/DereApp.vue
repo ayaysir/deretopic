@@ -1,10 +1,14 @@
 <template>
     <div id="app">
-        <h2>sound.yoonbumtae.com</h2>
+
+        <Header :msg="welcomeMessage" :accessToken="accessToken"></Header>
+        <router-view :msg="welcomeMessage" :key="$route.fullPath" :accessToken="accessToken"/>
+        <!-- <Topic /> -->
     </div>
 </template>
 
 <script>
+    import Header from '@/components/common/Header.vue'
 
     export default {
         name: 'App',
@@ -16,10 +20,33 @@
             }
         },
         components: {
-            
+            Header,
+            // Topic
         },
 
         created() {
+
+            async function getTitle() {
+                const init = await fetch("/api/test/title", {
+                    method: "get"
+                })
+                return init.text()
+            }
+            getTitle().then(text => {
+                this.welcomeMessage = text
+                // 제목 설정
+                document.title = text
+            })
+
+            // localStorage에서 accessToken 가져옴
+            const token = localStorage.getItem("accessToken")
+            if(token && token != "") {
+                this.$store.dispatch("LOGIN", token).then(() => {})
+            }
+
+            if(window.location.hostname == "dere.yoonbumtae.com" || window.location.hostname == "localhost") {
+                // this.$route.push({name: 'Topic'})
+            }
 
         },
         
