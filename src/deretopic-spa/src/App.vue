@@ -43,6 +43,9 @@
             if(token && token != "") {
                 this.$store.dispatch("LOGIN", token).then(() => {})
             }
+
+            // 현재 URL이 뭔가요?
+            console.log("url", window.location.hostname)
         },
         
         
